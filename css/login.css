@@ -1,0 +1,110 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+}
+
+.login-container {
+    background-color: #fff;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+label {
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo para el elemento select2 */
+.select2-container {
+    width: 100%; /* Establece el ancho deseado */
+}
+
+/* Estilo para la lista desplegable */
+.select2-selection--single {
+    height: 34px; /* Altura deseada */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Borde redondeado */
+}
+
+.select2-selection__rendered {
+    line-height: 34px; /* Altura de línea */
+    padding-left: 10px; /* Espacio interno izquierdo para el texto seleccionado */
+}
+
+/* Estilo para el icono de flecha */
+.select2-selection__arrow b {
+    border-color: #888 transparent transparent transparent;
+}
+
+/* Estilo para los elementos de la lista desplegable */
+.select2-results__option {
+    padding: 8px 12px; /* Espacio interno para cada elemento de la lista */
+}
+
+/* Estilo para los elementos resaltados en la lista */
+.select2-results__option--highlighted {
+    background-color: #007bff; /* Color de fondo resaltado */
+    color: #fff; /* Color de texto resaltado */
+}
+
+/* Estilo para la lista completa */
+.select2-dropdown {
+    border: 1px solid #ccc; /* Borde de la lista */
+}
+
+/* Estilo para la barra de búsqueda dentro de la lista */
+.select2-search input {
+    width: 100%; /* Ancho completo */
+    padding: 5px; /* Espacio interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Borde redondeado */
+}

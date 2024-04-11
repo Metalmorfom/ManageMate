@@ -1,0 +1,159 @@
+/* Estilo para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para el encabezado */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Estilo para el título de la página */
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Estilo para el contenedor principal */
+.contenedor {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow-x: scroll; /* Agregar overflow:auto o overflow:scroll */
+}
+
+
+/* Estilo para la tabla de tickets */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Estilo para las filas alternas de la tabla */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para enlaces */
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Estilos para el menú horizontal */
+.menu-horizontal {
+    background-color: #5858589a;
+    /* Color de fondo del menú */
+    padding: 10px 0;
+    /* Espaciado interior del menú */
+    display: flex; /* Utiliza Flexbox para crear dos columnas */
+    justify-content: space-between; /* Distribuye los elementos en dos columnas */
+    align-items: center; /* Centra verticalmente los elementos en cada columna */
+    margin-bottom: 40px;
+    
+}
+
+.menu-horizontal ul {
+    list-style: none;
+}
+
+/* Estilo para los botones con clase "submit_mininav" */
+.btn_nuevo, button {
+    background-color: #007BFF;
+    /* Color de fondo */
+    color: #FFFFFF;
+    /* Color del texto */
+    padding: 10px 20px;
+    /* Espaciado interior */
+    border: none;
+    /* Sin borde */
+    border-radius: 5px;
+    /* Borde redondeado */
+    cursor: pointer;
+    /* Cambiar el cursor al pasar el mouse */
+    margin-right: 50px;
+}
+
+/* Estilo al pasar el mouse por encima */
+.btn_nuevo:hover {
+    background-color: #0056b3;
+    /* Color de fondo al pasar el mouse */
+}
+
+.lb_subtitlo {
+    /* Propiedades de estilo para el label con clase "lb_subtitlo" */
+    color: #FFFFFF; /* Cambia el color del texto */
+    font-size: 18px; /* Cambia el tamaño de fuente */
+    font-weight: bold; /* Cambia el grosor de la fuente a negrita */
+    margin-left: 100px; /* Cambia el margen izquierdo a 100px */
+    text-decoration: none; /* Cambia la decoración del texto, por ejemplo, sin subrayado */
+}
+
+
+
+#searchInput {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s;
+}
+
+.pagination-btn {
+    /* Estilos para todos los botones de paginación */
+    background-color: #f0f0f0;
+    border: 1px solid #dcdcdc;
+    color: #333;
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.pagination-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.active-page {
+    /* Estilos para la página activa */
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+
+.search-container{
+    padding-right: 5px;
+    margin-right: 10px;
+}

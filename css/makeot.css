@@ -1,0 +1,662 @@
+/* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#creaOTForm {
+    margin: 20px auto; /* Esto centra el formulario y añade un margen superior e inferior */
+    background: #fff;
+    padding: 20px; /* Añade padding dentro del formulario */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px); /* Esto asegura que el ancho total, incluyendo el padding, no exceda el 100% */
+    max-width: 1200px; /* Puedes establecer un max-width para que el formulario no sea demasiado ancho en pantallas grandes */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho y alto del elemento */
+}
+
+
+label {
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+#creaOTForm input[type="text"],
+#creaOTForm input[type="search"],
+#creaOTForm select,
+#creaOTForm .selectdos,
+#creaOTForm #Modelo,
+#creaOTForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+input[type="submit"]:hover {
+    background-color: #4cae4c;
+}
+
+/* Estilos para la lista de autocompletado */
+.lista-empresas {
+    position: absolute;
+    width: 50%;
+    background-color: #fff;
+
+    border-top: none;
+    z-index: 2;
+}
+
+.lista-empresas p {
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.lista-empresas p:last-child {
+    border-bottom: none;
+}
+
+.lista-empresas p:hover {
+    background-color: #f4f4f4;
+}
+
+.busqueda-container {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+}
+
+#empresa,
+#inputAutocompletar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
+
+#sugerencias {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 550px;
+    background: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+#sugerencias li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+#sugerencias li:hover {
+    background-color: #f7f7f7;
+}
+
+#sugerencias li:first-child {
+    font-weight: bold;
+    color: #333;
+    background-color: #f3f3f3;
+}
+
+.titulo {
+    font-weight: bold;
+    color: #333;
+    background-color: #eaeaea;
+}
+
+/* Estilos para columnas */
+.columnas {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.columna {
+    flex-basis: calc(50% - 10px);
+    margin-bottom: 20px;
+    padding: 0px 50px;
+    
+}
+
+/* Estilos para los elementos del formulario */
+.columna label,
+.columna input[type="text"],
+.columna input[type="search"],
+.columna select,.selectdos,
+.columna textarea {
+    width: 85%;
+    margin-bottom: 0px;
+    height: 40px;
+    font-size: 15px;
+    font-stretch: expanded;
+}
+
+
+
+/* Estilos para el botón de enviar en la última columna */
+.columna:last-child input[type="submit"] {
+    width: auto;
+}
+
+
+.lista-empresas.clientelist {
+    border: 1px solid #000; /* '1px' es el ancho, 'solid' es el estilo y '#000' es el color (negro) */
+    border-radius: 5px;
+    border-left: 2px solid red; /* Añade un borde izquierdo rojo */
+    border-right: 2px solid red; /* Añade un borde derecho rojo */}
+    
+
+
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 60%;
+    max-width: 60%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#fileUploadForm{
+    max-width: 60%;
+    overflow: hidden; /* Oculta cualquier contenido que exceda del tamaño del elemento */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el contenido es demasiado largo */
+    white-space: nowrap; /* Evita que el contenido se envuelva en una nueva línea */
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    color: #358355; /* IE10+ */
+    background-color: #e9ecef;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    opacity: .5;
+}
+
+progress::-webkit-progress-bar,
+progress[value]::-webkit-progress-bar {
+    background-color: #e9ecef;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value,
+
+
+#progressContainer {
+    position: relative;
+    width: 100%;
+}
+
+#progressBar {
+    width: 100%;
+}
+
+#progressPercentage {
+    position: absolute;
+    right: -50px;
+    top: 0;
+    padding: 0 10px;
+    background: rgba(255, 255, 255, 0.5);
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+/* Establece un ancho máximo para todos los elementos input */
+input[type="text"],
+input[type="search"],
+select,
+
+textarea {
+    max-width: 400px;
+    /* Cambia el valor según tus preferencias */
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#resumen,
+textarea {
+    max-width: 100%;
+
+}
+
+/* Estilos para el menú horizontal */
+.menu-horizontal {
+    background-color: #5858589a;
+    /* Color de fondo del menú */
+    padding: 10px 0;
+    /* Espaciado interior del menú */
+    text-align: right;
+    /* Alinea los elementos a la derecha */
+    margin-bottom: 40px;
+}
+
+.menu-items {
+    list-style-type: none;
+    /* Quita los marcadores de lista */
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    /* Coloca los elementos en línea horizontalmente */
+    margin-right: 20px;
+    /* Espacio entre elementos del menú (ajustado para alinear a la derecha) */
+}
+
+/* Estilo para los botones con clase "submit_mininav" */
+.submit_mininav {
+    background-color: #007BFF;
+    /* Color de fondo */
+    color: #FFFFFF;
+    /* Color del texto */
+    padding: 10px 20px;
+    /* Espaciado interior */
+    border: none;
+    /* Sin borde */
+    border-radius: 5px;
+    /* Borde redondeado */
+    cursor: pointer;
+    /* Cambiar el cursor al pasar el mouse */
+}
+
+/* Estilo al pasar el mouse por encima */
+.submit_mininav:hover {
+    background-color: #0056b3;
+    /* Color de fondo al pasar el mouse */
+}
+
+
+/* Estilos para la lista de archivos adjuntos en el menú de navegación */
+#archivoListNav {
+    list-style-type: none;
+    /* Quita los marcadores de lista */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    /* Muestra los elementos en línea */
+    flex-wrap: wrap;
+    /* Envuelve los elementos en nuevas filas si no caben en el ancho disponible */
+    color: #0000EE;
+    margin-left: 50px;
+}
+
+#archivoListNav li {
+    width: 150px;
+    /* Ancho fijo de 200px para cada elemento */
+    margin-right: 20px;
+    /* Espacio entre elementos de la lista */
+    margin-bottom: 10px;
+    /* Espacio vertical entre elementos */
+    overflow: hidden;
+    /* Oculta el desbordamiento del contenido */
+    display: flex;
+    /* Usa flexbox para alinear icono y texto */
+    align-items: center;
+    /* Centra los elementos verticalmente */
+
+}
+
+/* Estilos específicos para el contenedor del nombre del archivo */
+.nombre-contenedor {
+    text-overflow: ellipsis;
+    /* Mostrar puntos suspensivos si el texto se desborda */
+    white-space: nowrap;
+    /* Evita que el texto se divida en varias líneas */
+    overflow: hidden;
+    /* Oculta el desbordamiento del contenido */
+    flex-grow: 1;
+    /* Permite que este contenedor ocupe el espacio restante */
+    direction: rtl;
+    /* Cambia la dirección del texto a derecha a izquierda */
+}
+
+.notita {
+    color: white;
+
+}
+
+
+
+
+
+/* Estilos para dispositivos móviles con un ancho máximo de 768px */
+@media screen and (max-width: 768px) {
+    /* Ajusta los estilos para pantallas más pequeñas aquí */
+
+    #creaOTForm {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="search"],
+    select,
+    .selectdos,
+    #Modelo,
+    textarea {
+        font-size: 14px;
+    }
+
+    input[type="submit"] {
+        font-size: 16px;
+    }
+
+    .columna label,
+    .columna input[type="text"],
+    .columna input[type="search"],
+    .columna select,
+    .selectdos,
+    .columna textarea {
+        font-size: 14px;
+    }
+
+    .menu-items {
+        margin-right: 10px;
+    }
+
+    .submit_mininav {
+        padding: 8px 16px;
+    }
+
+    .lista-empresas {
+        width: 100%;
+    }
+
+    .columnas {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .columna {
+        flex-basis: 100%;
+        padding: 0 10px;
+    }
+
+    .modal-content {
+        width: 80%;
+        max-width: 80%;
+    }
+}
+
+
+
+
+
+.eliminar_adjuntos {
+    background-color: #ff4d4d; /* Color de fondo rojo para indicar acción de eliminar */
+    color: white; /* Texto blanco para contraste */
+    border: none; /* Sin bordes para un look moderno */
+    padding: 5px 20px; /* Padding para hacer el botón más grande y fácil de clickear */
+    border-radius: 5px; /* Bordes redondeados para un look suave */
+    font-weight: bold; /* Texto en negrita para destacar */
+    cursor: pointer; /* Cambiar el cursor para indicar que es clickeable */
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
+}
+
+.eliminar_adjuntos:hover {
+    background-color: #cc0000; /* Un tono más oscuro de rojo al pasar el mouse por encima */
+}
+
+#nombre-td  {
+    width: 80%; /* Ajusta este valor según sea necesario */
+    /* Otros estilos que quieras aplicar */
+}
+#nombre-td {
+    max-width: 450px; /* Ajusta este valor según el tamaño del contenedor */
+    /* Otros estilos que quieras aplicar */
+}
+
+
+.descripcion{
+    height: 150px;
+}
+
+
+
+
+
+
+
+/* Estilos de la barra de pestañas */
+.tab {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    margin-top: 50px;
+    background-color: transparent;
+    margin-bottom: -2.2px;
+    z-index: 1000;
+  }
+  
+  /* Estilos de los botones de las pestañas */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: 1px solid #b4b4b4; /* Añadir borde a los botones de las pestañas */
+    border-bottom: none; /* Quitar borde inferior para que se fusione con el contenido */
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    background-color: #e4e2e2;
+  }
+  
+  .tab button:hover {
+    background-color: #ddd;
+    border-top: 2px solid green; /* Borde superior para la pestaña activa */
+  }
+  
+  .tab button.active {
+    background-color: #fff;
+    border-top: 2px solid green; /* Borde superior para la pestaña activa */
+    border-left: 1px solid #ccc; /* Añadir borde izquierdo a la pestaña activa */
+    border-right: 1px solid #ccc; /* Añadir borde derecho a la pestaña activa */
+    border-bottom: 2px solid #fff; /* Borde inferior de la pestaña activa */
+  }
+  
+  /* Estilos del contenido de la pestaña */
+  .tabcontent {
+    display: none; /* Cambiar todas las clases de contenido a 'display: none;' inicialmente */
+    padding: 6px 12px;
+    border: 1px solid #ccc; /* Añadir borde al contenido */
+    border-top: none; /* Quitar borde superior para que se fusione con la pestaña activa */
+    
+  }
+  
+/* Estilos del contenido de la pestaña "Notas" */
+.tabcontent_Notas {
+    display: block;
+    /* Inicialmente oculto */
+    padding: 6px 12px;
+   
+    
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border: 1px solid #ccc;
+    z-index: 5;
+    
+    
+    
+    
+}
+
+.tabcontent_Notas textarea {
+    background-color: lightgoldenrodyellow;
+    width: 100%;
+    min-width: 100px;
+   
+    
+}
+
+/* Estilos del contenido de la pestaña "Series" */
+.tabcontent_series {
+    display: none;
+    /* Inicialmente oculto */
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    border: 1px solid #ccc;
+    z-index: 5;
+}
+
+/* Estilos del contenido de la pestaña "Actividades" */
+.tab-content_actividades {
+    display: none;
+    /* Inicialmente oculto */
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding-bottom: 25px;
+    border: 1px solid #ccc;
+    z-index: 5;
+}
+
+/* Estilos comunes de las tablas dentro de las pestañas */
+.tab-content_actividades table,
+.tabcontent_series table,
+.tabcontent_Notas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tab-content_actividades th,
+.tabcontent_series th,
+.tabcontent_Notas th,
+.tab-content_actividades td,
+.tabcontent_series td,
+.tabcontent_Notas td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    min-width: 120px;
+}
+
+.tab-content_actividades th,
+.tabcontent_series th,
+.tabcontent_Notas th {
+    background-color: #f2f2f2;
+    text-transform: uppercase;
+}
+
+.tab-content_actividades input[type="checkbox"],
+.tabcontent_series input[type="checkbox"],
+.tabcontent_Notas input[type="checkbox"],
+.tab-content_actividades label,
+.tabcontent_series label,
+.tabcontent_Notas label {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+
+
+.tab-Notas .tab-Componentes .tab-Actividades{
+    border: 1px solid #ccc;
+    border-bottom: none;
+   
+}
+
+
+
+
+.lista-sugerencias {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 400px;
+    z-index: 2;
+   
+    
+    
+}
+
+/* Estilo para cada elemento de la lista */
+.lista-sugerencias p {
+    padding: 8px;
+    margin: 0;
+    cursor: pointer;
+    transition: background-color 0.2s;width: 100%;
+}
+
+/* Estilo para resaltar elementos al pasar el mouse */
+.lista-sugerencias p:hover {
+    background-color: #f0f0f0;
+
+}
+

@@ -1,0 +1,263 @@
+#crearuserformi {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Dos columnas de igual tamaño */
+    gap: 20px;
+    /* Espacio entre columnas */
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
+}
+
+#crearuserformi input[type="text"],
+#crearuserformi input[type="email"],
+#crearuserformi input[type="password"],
+#crearuserformi input[type="date"],
+#crearuserformi select {
+    width: 100%;
+    /* Ajustado para grid */
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#crearuserformi label {
+    margin-top: 8px;
+    display: block;
+    font-weight: bold;
+}
+
+#crearuserformi button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#crearuserformi button:hover {
+    background-color: #0056b3;
+}
+
+#crearuserformi a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+#crearuserformi a:hover {
+    text-decoration: underline;
+}
+
+#crearuserformi .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* Espacio entre botones */
+}
+
+#crearuserformi .full-width {
+    grid-column: 1 / -1;
+    /* Ocupa todas las columnas disponibles */
+    display: flex;
+    justify-content: center;
+    /* Centra los elementos horizontalmente */
+    gap: 10px;
+    /* Espacio entre los elementos */
+}
+
+#crearuserformi .full-width .button-like {
+    flex-grow: 1;
+    /* Permite que ambos elementos crezcan de manera uniforme */
+    padding: 10px 20px;
+    /* Relleno uniforme para botones y enlaces */
+    text-decoration: none;
+    /* Elimina el subrayado de los enlaces */
+    border: 1px solid #007bff;
+    /* Estilo del borde */
+    border-radius: 4px;
+    /* Bordes redondeados */
+    background-color: #007bff;
+    /* Color de fondo */
+    color: white;
+    /* Color del texto */
+    font-size: 16px;
+    /* Tamaño de la fuente */
+    cursor: pointer;
+    /* Cambia el cursor a una mano al pasar por encima */
+    text-align: center;
+    /* Alineación del texto */
+    display: flex;
+    /* Utiliza flex para el alineamiento interno */
+    align-items: center;
+    /* Centra el contenido verticalmente */
+    justify-content: center;
+    /* Centra el contenido horizontalmente */
+    height: 40px;
+    /* Altura fija para los botones y enlaces */
+    box-sizing: border-box;
+    /* Asegura que el padding y border se incluyan en el ancho y altura */
+}
+
+#crearuserformi .full-width .button-like:hover {
+    background-color: #0056b3;
+    /* Cambia el color al pasar el ratón por encima */
+}
+
+#crearuserformi .form-group {
+    /* Estilos para el grupo del formulario */
+    margin: 0px;
+    align-items: center;
+    /* Alinea verticalmente el checkbox y la etiqueta */
+    gap: 5px;
+    /* Espacio entre el checkbox y la etiqueta */
+}
+
+#crearuserformi .form-group input[type="checkbox"] {
+    /* Estilos para el checkbox */
+    cursor: pointer;
+}
+
+#crearuserformi .form-group label {
+    /* Estilos para la etiqueta */
+    cursor: pointer;
+}
+
+#crearuserformi .phone-inputs {
+    display: flex;
+    flex-direction: column;
+    /* Organiza los hijos en una columna */
+    width: 100%;
+    margin-top: 0px;
+}
+
+#crearuserformi .phone-inputs .input-group select,
+#crearuserformi .phone-inputs .input-group input {
+    flex: 1;
+    /* Distribuye el espacio restante por igual */
+}
+
+#crearuserformi .phone-inputs select,
+#crearuserformi .phone-inputs input {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    /* Aplica cualquier otro estilo que desees para que coincidan con el diseño general del formulario */
+}
+
+#crearuserformi .phone-inputs .input-group {
+    display: flex;
+    width: 100%;
+    /* Asegura que este div también ocupe el 100% de la fila */
+    gap: 10px;
+    /* Espacio entre el select y el input */
+}
+
+#crearuserformi .phone-inputs .input-group select {
+    flex: 0 0 38%;
+    /* Asigna un tamaño fijo al select de 38% */
+    /* Ajusta este porcentaje según sea necesario para obtener el tamaño deseado */
+}
+
+#crearuserformi .phone-inputs .input-group input {
+    flex-grow: 1;
+    /* El input se expandirá para ocupar el espacio restante */
+}
+
+#crearuserformi .form-group .select2 {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#crearuserformi progress {
+    /* Remueve el estilo por defecto */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Dimensiones */
+    width: 100%;
+    height: 20px; /* Ajusta la altura según tus necesidades */
+    /* Estilos generales */
+    color: #0e6934; /* Color de la barra de progreso */
+    background-color: #e9ecef; /* Color de fondo de la barra de progreso */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interior para dar profundidad */
+    overflow: hidden; /* Asegura que los bordes redondeados se mantengan en navegadores antiguos */
+}
+
+#crearuserformi progress::-webkit-progress-bar {
+    background-color: #e9ecef;
+    border-radius: 10px;
+}
+
+#crearuserformi progress::-webkit-progress-value {
+    background-color: #0e6934;
+    border-radius: 10px;
+}
+
+#crearuserformi progress::-moz-progress-bar {
+    background-color: #0e6934;
+    border-radius: 10px;
+}
+
+#crearuserformi .valid {
+    border-color: green;
+}
+
+#crearuserformi .invalid {
+    border-color: red;
+}
+
+#crearuserformi button:disabled {
+    background-color: grey !important;
+    /* Cambia el color de fondo a gris */
+    color: white;
+    /* Cambia el color del texto a blanco */
+}
+
+/* Ocultar el checkbox real */
+#crearuserformi .custom-checkbox {
+    display: none;
+}
+
+/* Estilo para la etiqueta que mostrará el ícono personalizado */
+#crearuserformi .custom-checkbox + label {
+    position: relative;
+    padding-left: 25px;
+    /* Espacio para el ícono */
+    cursor: pointer;
+}
+
+/* Pseudo-elemento que mostrará un ícono o color personalizado */
+#crearuserformi .custom-checkbox + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    /* Tamaño del cuadro del ícono */
+    height: 20px;
+    border: 1px solid #999;
+    background-color: #fff;
+    border-radius: 3px;
+    /* Opcional: para bordes redondeados */
+}
+
+/* Cambio de estilo cuando el checkbox está marcado */
+#crearuserformi .custom-checkbox:checked + label:before {
+    content: '✔';
+    /* Puedes usar un ícono de una fuente de íconos como FontAwesome */
+    color: green;
+    /* Color del ícono */
+    font-size: 20px;
+    /* Tamaño del ícono */
+    line-height: 20px;
+    /* Centrar verticalmente el ícono en el cuadro */
+    text-align: center;
+}

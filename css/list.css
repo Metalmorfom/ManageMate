@@ -1,0 +1,140 @@
+/* Estilos generales */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.contenedor {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow-x: scroll;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.menu-horizontal {
+    background-color: #5858589a;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.menu-horizontal ul {
+    list-style: none;
+}
+
+.btn_nuevo, button {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 50px;
+}
+
+.btn_nuevo:hover {
+    background-color: #0056b3;
+}
+
+.lb_subtitlo {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 100px;
+    text-decoration: none;
+}
+
+#searchInput {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s;
+}
+
+.pagination-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #dcdcdc;
+    color: #333;
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.pagination-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.active-page {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* Estilos responsivos */
+
+@media only screen and (max-width: 600px) {
+    /* Ajustes para pantallas más pequeñas */
+    .contenedor {
+        overflow-x: auto;
+    }
+    
+    .btn_nuevo, button {
+        margin-right: 10px;
+    }
+}

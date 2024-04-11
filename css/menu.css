@@ -1,0 +1,50 @@
+.select2-container {
+    width: 150px;
+    /* Ajusta este valor según tus necesidades */
+}
+
+/* Clase para cambiar el color del texto del nombre de usuario a blanco */
+.nombre-usuario {
+
+
+
+    color: white;
+    /* No necesitas establecer un width fijo aquí a menos que sea necesario */
+    margin-right: 0px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+    /* Ajusta este valor según el espacio disponible */
+    display: inline-block;
+}
+
+
+/* Estilo para el botón con el icono de tuerca */
+.btn-tuerca {
+    border: none !important;
+    /* Elimina el borde del botón */
+    background: none !important;
+    /* Hace que el fondo sea transparente */
+    color: white !important;
+    /* Color inicial del icono */
+    transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out !important;
+    /* Efecto de transición suave */
+    transition: transform 0.3s ease-in-out !important;
+    margin-right: 10px !important;
+    padding: 0 !important;
+    /* Reduce el espacio si es necesario */
+    margin-left: 0px !important;
+    /* Añade algo de espacio entre el nombre de usuario y la tuerca */
+}
+
+/* Estilo para el botón con el icono de tuerca al pasar el cursor */
+.btn-tuerca:hover {
+    color: #949494!important;
+    /* Color del icono al pasar el cursor */
+    transform: rotate(90deg)!important;
+    /* Rota el icono 90 grados */
+
+}
+
