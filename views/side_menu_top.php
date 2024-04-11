@@ -56,7 +56,7 @@
 <!-- Side menu -->
 <div id="sidebar" class="sidebar">
   
-    <a href="#">Inicio</a>
+    <a href="#">Inicio prueba</a>
     <a href="#">Perfil</a>
     <a href="#">Configuración</a>
     <a href="#">Cerrar Sesión</a>
