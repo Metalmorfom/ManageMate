@@ -14,7 +14,7 @@
             left: -230px; /* Inicialmente oculto */
             background-color: #343a40!important;
             padding-top: 20px;
-            transition: left 0.3s, width 0.3s 0.1s; /* Transición suave para el movimiento */
+            transition: left 0.3s, width 0.3s 0.1s; /* Transición suave para el movimiento ojaaa */
             z-index: 100;
         }
 
