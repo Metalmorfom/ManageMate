@@ -12,6 +12,8 @@
 <body>
 
     <?php include("Menu.php"); ?>
+    <?php include("side_menu_top.php");?>
+
 
     <nav class="menu-horizontal">
         <ul class="menu-items">
@@ -106,6 +108,7 @@
         <!-- Paginación -->
         <div id="pagination-wrapper"></div>
     </div>
+    <?php include("side_menu_bot.php");?>
 
     <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <script src="../controllers/Js_functions/list_ot.js"> </script>

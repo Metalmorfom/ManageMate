@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Side Menu Example</title>
+    
+ 
     <style>
         /* Estilos CSS para el side menu */
         .sidebar {
-            height: 100vh;
+            height: 150vh;
             width: 250px; /* Ancho del side menu */
             position: absolute;
             top: 70px;
@@ -49,10 +49,13 @@
             background-color: #555;
             z-index: 200;
         }
-    </style>
-</head>
-<body>
 
+        .side-menu-top-container, .side-menu-bot-container {
+    height: 100%; /* Ajustar la altura al 100% del cuerpo si es necesario */
+}
+    </style>
+
+<div class="side-menu-top-container">
 <!-- Side menu -->
 <div id="sidebar" class="sidebar">
   
@@ -64,7 +67,7 @@
 
 <!-- Botón para mostrar el side menu cuando está oculto -->
 <button id="showSidebarBtn" onclick="toggleSidebar()"><<</button>
-
+</div>
 <!-- Contenido principal -->
 <div id="main-content" style="margin-left: 0;">
  

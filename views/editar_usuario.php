@@ -14,6 +14,8 @@
     include("menu.php");
     include("../controllers/controlador_perfil.php");
     ?>
+<?php include("side_menu_top.php");?>
+
 
     <div class="header">
         <h1>Perfil de Usuario</h1>
@@ -92,6 +94,8 @@
     <!-- boostrap 5-->
 
     <script src="../controllers/validations/valid_edit_perfil.js"></script>
+    <?php include("side_menu_bot.php");?>
+
 </body>
 
 </html>

@@ -34,6 +34,7 @@
     $result_roles = $conexion->query($query_roles);
 
     ?>
+<?php include("side_menu_top.php");?>
 
 
     
@@ -175,6 +176,8 @@
 
     <script src="../controllers/validations/valid_register.js"> </script>
 
+
+    <?php include("side_menu_bot.php");?>
 
 
 </body>
