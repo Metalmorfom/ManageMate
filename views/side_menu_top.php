@@ -181,7 +181,7 @@ window.addEventListener('resize', adjustSidebarHeight);
 
         <!-- Botón para mostrar el side menu cuando está oculto -->
         <button id="showSidebarBtn" onclick="toggleSidebar()">
-            <<< /button>
+            << </button>
     </div>
     <!-- Contenido principal -->
     <div id="main-content" style="margin-left: 0;">
