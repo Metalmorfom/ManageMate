@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../css/busqueda.css">
     <script src="../controllers/Js_functions/crear_ot.js"></script> <!-- Script para crear OT -->
     <script src="../controllers/validations/valid_busqueda.js"></script>
-   
+
     <script src="../controllers/Js_functions/genericos.js"></script> <!-- Scripts genéricos de la aplicación -->
 
 
@@ -32,7 +32,7 @@
 
 
     <?php
-  include("menu.php");
+    include("menu.php");
     // Verifica si las variables están definidas y tienen valores válidos
     if (isset($_GET['filtro_cliente']) && isset($_GET['filtro_numero_ticket'])) {
         $filtroCliente = $_GET['filtro_cliente'];
@@ -46,14 +46,14 @@
         header("Location: pagina_de_error.php");
         exit();
     }
-  
+
     include("../config/conexion_bd.php");
     include("../controllers/controlador_busqueda.php");
     include("../controllers/load_notas.php")
 
     ?>
 
-<?php include("side_menu_top.php");?>
+    <?php include("side_menu_top.php"); ?>
     <nav class="menu-horizontal">
         <ul class="menu-items">
             <li>
@@ -612,33 +612,517 @@
 
                     <input type="search" id="empresa" name="empresa" onkeyup="buscarEmpresa(this.value)" autocomplete="off" value="<?php echo htmlspecialchars($nombre_empresa); ?>">
                     <input type="hidden" id="rutEmpresaHidden" name="rut_empresa" value="<?php echo htmlspecialchars($rut_empresa); ?>">
+                    <button type="button" onclick="mostrarDatosEmpresa(this)">
+                        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+                    </button>
                     <div id="listaEmpresas" class="lista-sugerencias"></div>
-                   
+
                     <div id="mensajeErrorEmpresa" style="color: red; display: none;"></div>
 
                 </div>
+
+
+                <div id="ventanaEmergenteEmpresa" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
+                    <!-- Título de la ventana -->
+                    <h3 style="margin-bottom: 10px;">Información de la Empresa</h3>
+
+                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
+                    <div id="contenidoVentanaEmergenteEmpresa" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
+                        <div class="campo-formulario">
+                            <label for="nombreEmpresa">Nombre:</label>
+                            <div id="nombreEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="direccionEmpresa">Dirección:</label>
+                            <div id="direccionEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="ciudadEmpresa">Ciudad:</label>
+                            <div id="ciudadEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="paisEmpresa">País:</label>
+                            <div id="paisEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="telefonoEmpresa">Teléfono:</label>
+                            <div id="telefonoEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="correoEmpresa">Correo:</label>
+                            <div id="correoEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="sitioWebEmpresa">Sitio Web:</label>
+                            <div id="sitioWebEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="descripcionEmpresa">Descripción:</label>
+                            <div id="descripcionEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                    </div>
+                    <!-- Botón de cierre -->
+                    <button type="button" id="cerrarVentanaEmergenteEmpresa" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function mostrarDatosEmpresa(boton) {
+                        // Obtener el valor del input hidden
+                        var empresa_user_generador = $('#empresa_user_generador').val();
+
+                        // Enviar solicitud AJAX
+                        $.ajax({
+                            url: '../controllers/ajax_mini/empresa_por.php', // Reemplaza con la URL correcta de tu script PHP
+                            type: 'POST',
+                            data: {
+                                empresa_usuario: empresa_user_generador
+                            },
+                            success: function(response) {
+                                // Parsear los datos JSON recibidos
+                                var datosEmpresa = JSON.parse(response);
+
+                                // Mostrar la ventana emergente
+                                var ventanaEmergenteEmpresa = $('#ventanaEmergenteEmpresa');
+                                ventanaEmergenteEmpresa.css('display', 'block');
+
+                                // Mostrar el contenido en la ventana emergente
+                                $('#nombreEmpresa').text(datosEmpresa.nombre);
+                                $('#direccionEmpresa').text(datosEmpresa.direccion);
+                                $('#ciudadEmpresa').text(datosEmpresa.ciudad);
+                                $('#paisEmpresa').text(datosEmpresa.pais);
+                                $('#telefonoEmpresa').text(datosEmpresa.telefono);
+                                $('#correoEmpresa').text(datosEmpresa.correo);
+                                $('#sitioWebEmpresa').text(datosEmpresa.sitio_web);
+                                $('#descripcionEmpresa').text(datosEmpresa.descripcion);
+
+                                // Obtener la posición original del botón
+                                var botonRect = boton.getBoundingClientRect();
+
+                                // Ajustar la posición de la ventana emergente
+                                var ventanaTop = botonRect.bottom + 10;
+                                var ventanaLeft = botonRect.left - 50;
+
+                                // Obtener el ancho y alto de la ventana emergente
+                                var ventanaWidth = ventanaEmergenteEmpresa.outerWidth();
+                                var ventanaHeight = ventanaEmergenteEmpresa.outerHeight();
+
+                                // Verificar si la ventana emergente se sale del lado derecho del body
+                                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
+                                    ventanaLeft = document.body.clientWidth - ventanaWidth;
+                                }
+
+                                // Verificar si la ventana emergente se sale del lado inferior del body
+                                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
+                                    ventanaTop = document.body.clientHeight - ventanaHeight;
+                                }
+
+                                // Ajustar la posición de la ventana emergente
+                                ventanaEmergenteEmpresa.css('top', ventanaTop + 'px');
+                                ventanaEmergenteEmpresa.css('left', ventanaLeft + 'px');
+
+                                // Mostrar el botón de cierre
+                                var cerrarBoton = $('#cerrarVentanaEmergenteEmpresa');
+                                cerrarBoton.css('visibility', 'visible');
+
+                                // Agregar evento de clic al botón de cierre
+                                cerrarBoton.on('click', function() {
+                                    ventanaEmergenteEmpresa.css('display', 'none');
+                                });
+
+                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
+                                $(document).on('click', function(event) {
+                                    if (!ventanaEmergenteEmpresa.is(event.target) && ventanaEmergenteEmpresa.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
+                                        ventanaEmergenteEmpresa.css('display', 'none');
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error en la solicitud AJAX: ' + error);
+                                alert('Error en la solicitud AJAX al obtener los datos de la empresa.');
+                            }
+                        });
+                    }
+                </script>
+
 
                 <label for="cliente">Solicitante:</label>
                 <input type="search" id="cliente" name="cliente" value="<?php echo htmlspecialchars($nombre_cliente); ?>" autocomplete="off" onkeyup="buscarCliente(this.value)">
                 <input type="hidden" id="rut_cliente" name="rut_cliente" value="<?php echo htmlspecialchars($cliente_rut_cliente); ?>">
 
                 <div id="listaClientes" class="lista-sugerencias"></div>
+                <button type="button" onclick="mostrarDatosCliente(this)">
+                    <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+                </button>
+
+                <div id="ventanaEmergenteCliente" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
+                    <!-- Título de la ventana -->
+                    <h3 style="margin-bottom: 10px;">Información del Cliente</h3>
+
+                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
+                    <div id="contenidoVentanaEmergenteCliente" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
+                        <div class="campo-formulario">
+                            <label for="nombreCliente">Nombre:</label>
+                            <div id="nombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="segundoNombreCliente">Segundo Nombre:</label>
+                            <div id="segundoNombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="apellidoPaternoCliente">Apellidos:</label>
+                            <div id="apellidoPaternoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="correoCliente">Correo:</label>
+                            <div id="correoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="telefonoCliente">Teléfono:</label>
+                            <div id="telefonoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                    </div>
+                    <!-- Botón de cierre -->
+                    <button type="button" id="cerrarVentanaEmergenteCliente" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function mostrarDatosCliente(boton) {
+                        // Obtener el valor del input hidden
+                        var rut_cliente = $('#rut_cliente').val();
+
+                        // Enviar solicitud AJAX
+                        $.ajax({
+                            url: '../controllers/ajax_mini/cliente_por.php', // Reemplaza con la URL correcta de tu script PHP
+                            type: 'POST',
+                            data: {
+                                cliente_usuario: rut_cliente
+                            },
+                            success: function(response) {
+                                // Parsear los datos JSON recibidos
+                                var datosCliente = JSON.parse(response);
+
+                                // Mostrar la ventana emergente
+                                var ventanaEmergenteCliente = $('#ventanaEmergenteCliente');
+                                ventanaEmergenteCliente.css('display', 'block');
+
+                                // Mostrar el contenido en la ventana emergente
+                                $('#nombreCliente').text(datosCliente.nombre);
+                                $('#segundoNombreCliente').text(datosCliente.s_nombre);
+                                $('#apellidoPaternoCliente').text(datosCliente.apellidos);
+
+                                $('#correoCliente').text(datosCliente.correo);
+                                $('#telefonoCliente').text(datosCliente.telefono);
+
+                                // Obtener la posición original del botón
+                                var botonRect = boton.getBoundingClientRect();
+
+                                // Ajustar la posición de la ventana emergente
+                                var ventanaTop = botonRect.bottom + 10;
+                                var ventanaLeft = botonRect.left - 50;
+
+                                // Obtener el ancho y alto de la ventana emergente
+                                var ventanaWidth = ventanaEmergenteCliente.outerWidth();
+                                var ventanaHeight = ventanaEmergenteCliente.outerHeight();
+
+                                // Verificar si la ventana emergente se sale del lado derecho del body
+                                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
+                                    ventanaLeft = document.body.clientWidth - ventanaWidth;
+                                }
+
+                                // Verificar si la ventana emergente se sale del lado inferior del body
+                                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
+                                    ventanaTop = document.body.clientHeight - ventanaHeight;
+                                }
+
+                                // Ajustar la posición de la ventana emergente
+                                ventanaEmergenteCliente.css('top', ventanaTop + 'px');
+                                ventanaEmergenteCliente.css('left', ventanaLeft + 'px');
+
+                                // Mostrar el botón de cierre
+                                var cerrarBoton = $('#cerrarVentanaEmergenteCliente');
+                                cerrarBoton.css('visibility', 'visible');
+
+                                // Agregar evento de clic al botón de cierre
+                                cerrarBoton.on('click', function() {
+                                    ventanaEmergenteCliente.css('display', 'none');
+                                });
+
+                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
+                                $(document).on('click', function(event) {
+                                    if (!ventanaEmergenteCliente.is(event.target) && ventanaEmergenteCliente.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
+                                        ventanaEmergenteCliente.css('display', 'none');
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error en la solicitud AJAX: ' + error);
+                                alert('Error en la solicitud AJAX al obtener los datos del cliente.');
+                            }
+                        });
+                    }
+                </script>
+
+
+
+
+
+
 
                 <div class="busqueda-container">
-                <label for="asignado">Asignado:</label>
-                <input type="search" id="asignado" name="asignado" value="<?php echo htmlspecialchars($usuarios_rut_user); ?>" autocomplete="off" onkeyup="buscarUsuario(this.value)">
-                <input type="hidden" id="rut_user_asignado" name="rut_user_asignado" value="<?php echo htmlspecialchars($usuarios_rut_user_rut); ?>">
-                <div id="listaUsuarios" class="lista-sugerencias"></div>
-                <div id="mensajeErrorUsuario" style="color: red; display: none;"></div>
-                
-            </div>
+                    <label for="asignado">Asignado:</label>
+                    <input type="search" id="asignado" name="asignado" value="<?php echo htmlspecialchars($usuarios_rut_user); ?>" autocomplete="off" onkeyup="buscarUsuario(this.value)">
+                    <input type="hidden" id="rut_user_asignado" name="rut_user_asignado" value="<?php echo htmlspecialchars($usuarios_rut_user_rut); ?>">
+
+                    <button type="button" onclick="mostrarDatosAsignado(this)">
+                        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+                    </button>
+                    <div id="listaUsuarios" class="lista-sugerencias"></div>
+                    <div id="mensajeErrorUsuario" style="color: red; display: none;"></div>
+
+                </div>
+
+
+                <div id="ventanaEmergenteAsignado" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
+                    <!-- Título de la ventana -->
+                    <h3 style="margin-bottom: 10px;">Información de Asignado</h3>
+
+                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
+                    <div id="contenidoVentanaEmergenteAsignado" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
+                        <div class="campo-formulario">
+                            <label for="nombreAsignado">Nombre:</label>
+                            <div id="nombreAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="segundoNombreAsignado">Segundo Nombre:</label>
+                            <div id="segundoNombreAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="apellidoPaternoAsignado">Apellido Paterno:</label>
+                            <div id="apellidoPaternoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="apellidoMaternoAsignado">Apellido Materno:</label>
+                            <div id="apellidoMaternoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="correoAsignado">Correo:</label>
+                            <div id="correoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="telefonoAsignado">Teléfono:</label>
+                            <div id="telefonoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                    </div>
+                    <!-- Botón de cierre -->
+                    <button type="button" id="cerrarVentanaEmergenteAsignado" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function mostrarDatosAsignado(boton) {
+                        // Obtener el valor del input hidden
+                        var asignado_user_generador = $('#rut_user_asignado').val();
+
+                        // Enviar solicitud AJAX
+                        $.ajax({
+                            url: '../controllers/ajax_mini/asignado_por.php', // Reemplaza con la URL correcta de tu script PHP
+                            type: 'POST',
+                            data: {
+                                asignado_usuario: asignado_user_generador
+                            },
+                            success: function(response) {
+                                // Parsear los datos JSON recibidos
+                                var datosAsignado = JSON.parse(response);
+
+                                // Mostrar la ventana emergente
+                                var ventanaEmergenteAsignado = $('#ventanaEmergenteAsignado');
+                                ventanaEmergenteAsignado.css('display', 'block');
+
+                                // Mostrar el contenido en la ventana emergente
+                                $('#nombreAsignado').text(datosAsignado.nombre);
+                                $('#segundoNombreAsignado').text(datosAsignado.s_nombre);
+                                $('#apellidoPaternoAsignado').text(datosAsignado.ap_paterno);
+                                $('#apellidoMaternoAsignado').text(datosAsignado.ap_materno);
+                                $('#correoAsignado').text(datosAsignado.correo);
+                                $('#telefonoAsignado').text(datosAsignado.telefono);
+
+                                // Obtener la posición original del botón
+                                var botonRect = boton.getBoundingClientRect();
+
+                                // Ajustar la posición de la ventana emergente
+                                var ventanaTop = botonRect.bottom + 10;
+                                var ventanaLeft = botonRect.left - 50;
+
+                                // Obtener el ancho y alto de la ventana emergente
+                                var ventanaWidth = ventanaEmergenteAsignado.outerWidth();
+                                var ventanaHeight = ventanaEmergenteAsignado.outerHeight();
+
+                                // Verificar si la ventana emergente se sale del lado derecho del body
+                                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
+                                    ventanaLeft = document.body.clientWidth - ventanaWidth;
+                                }
+
+                                // Verificar si la ventana emergente se sale del lado inferior del body
+                                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
+                                    ventanaTop = document.body.clientHeight - ventanaHeight;
+                                }
+
+                                // Ajustar la posición de la ventana emergente
+                                ventanaEmergenteAsignado.css('top', ventanaTop + 'px');
+                                ventanaEmergenteAsignado.css('left', ventanaLeft + 'px');
+
+                                // Mostrar el botón de cierre
+                                var cerrarBoton = $('#cerrarVentanaEmergenteAsignado');
+                                cerrarBoton.css('visibility', 'visible');
+
+                                // Agregar evento de clic al botón de cierre
+                                cerrarBoton.on('click', function() {
+                                    ventanaEmergenteAsignado.css('display', 'none');
+                                });
+
+                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
+                                $(document).on('click', function(event) {
+                                    if (!ventanaEmergenteAsignado.is(event.target) && ventanaEmergenteAsignado.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
+                                        ventanaEmergenteAsignado.css('display', 'none');
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error en la solicitud AJAX: ' + error);
+                                alert('Error en la solicitud AJAX al obtener los datos del asignado.');
+                            }
+                        });
+                    }
+                </script>
+
 
             </div>
 
             <div class="columna">
                 <label for="rut_user_generador">Abierto por:</label>
-                <input type="text" id="rut_user_generador" name="rut_user_generador" value="<?php echo htmlspecialchars($nombre_generador); ?>" readonly style="background-color: #f0f0f0; border: 1px solid #ccc; opacity: 0.7; cursor: not-allowed;">
-                <input type="hidden" id="rut_user_generador2" name="rut_user_generador2" value="<?php echo htmlspecialchars($rut_user_generador); ?>">
+                <div style="display: flex; align-items: center;">
+                    <input type="text" id="rut_user_generador" name="rut_user_generador" value="<?php echo htmlspecialchars($nombre_generador); ?>" readonly style="background-color: #f0f0f0; border: 1px solid #ccc; opacity: 0.7; cursor: not-allowed; margin-right: 10px;">
+                    <input type="hidden" id="rut_user_generador2" name="rut_user_generador2" value="<?php echo htmlspecialchars($rut_user_generador); ?>">
+                    <button type="button" onclick="mostrarDatosUsuario(this)">
+                        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+                    </button>
+
+                </div>
+
+
+                <div id="ventanaEmergente" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
+                    <!-- Título de la ventana -->
+                    <h3 style="margin-bottom: 10px;">Contacto</h3>
+
+                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
+                    <div id="contenidoVentanaEmergente" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
+                        <div class="campo-formulario">
+                            <label for="nombreUsuario">Nombre:</label>
+                            <div id="nombreUsuario" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="segundoNombreUsuario">Segundo Nombre:</label>
+                            <div id="segundoNombreUsuario" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="apellidoPaternoUsuario">Apellido Paterno:</label>
+                            <div id="apellidoPaternoUsuario" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+
+                            <label for="apellidoMaternoUsuario">Apellido Materno:</label>
+                            <div id="apellidoMaternoUsuario" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="correoUsuario">Correo:</label>
+                            <div id="correoUsuario" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="telefonoUsuario">Teléfono:</label>
+                            <div id="telefonoUsuario" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                        </div>
+                    </div>
+                    <!-- Botón de cierre -->
+                    <button type="button" id="cerrarVentanaEmergente" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
+                </div>
+
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    function mostrarDatosUsuario(boton) {
+                        // Obtener el valor del input hidden
+                        var rut_user_generador = $('#rut_user_generador2').val();
+
+                        // Enviar solicitud AJAX
+                        $.ajax({
+                            url: '../controllers/ajax_mini/abierto_por.php', // Reemplaza con la URL correcta de tu script PHP
+                            type: 'POST',
+                            data: {
+                                rut_usuario: rut_user_generador
+                            },
+                            success: function(response) {
+                                // Parsear los datos JSON recibidos
+                                var datosUsuario = JSON.parse(response);
+
+                                // Mostrar la ventana emergente
+                                var ventanaEmergente = $('#ventanaEmergente');
+                                ventanaEmergente.css('display', 'block');
+
+                                // Mostrar el contenido en la ventana emergente
+                                $('#nombreUsuario').text(datosUsuario.nombre);
+                                $('#segundoNombreUsuario').text(datosUsuario.s_nombre);
+                                $('#apellidoPaternoUsuario').text(datosUsuario.ap_paterno);
+                                $('#apellidoMaternoUsuario').text(datosUsuario.ap_materno);
+                                $('#correoUsuario').text(datosUsuario.correo);
+                                $('#telefonoUsuario').text(datosUsuario.telefono);
+
+                                // Obtener la posición original del botón
+                                var botonRect = boton.getBoundingClientRect();
+
+                                // Ajustar la posición del botón para desplazarlo 50px a la izquierda
+                                var botonLeftAdjusted = botonRect.left - 50;
+
+                                // Calcular la posición de la ventana emergente basada en la posición ajustada del botón
+                                var ventanaTop = botonRect.bottom + 10;
+                                var ventanaLeft = botonLeftAdjusted;
+
+                                // Obtener el ancho y alto del body
+                                var bodyWidth = document.body.clientWidth;
+                                var bodyHeight = document.body.clientHeight;
+
+                                // Obtener el ancho y alto de la ventana emergente
+                                var ventanaWidth = ventanaEmergente.outerWidth();
+                                var ventanaHeight = ventanaEmergente.outerHeight();
+
+                                // Verificar si la ventana emergente se sale del lado derecho del body
+                                if (ventanaLeft + ventanaWidth > bodyWidth) {
+                                    ventanaLeft = bodyWidth - ventanaWidth;
+                                }
+
+                                // Verificar si la ventana emergente se sale del lado inferior del body
+                                if (ventanaTop + ventanaHeight > bodyHeight) {
+                                    ventanaTop = bodyHeight - ventanaHeight;
+                                }
+
+                                // Ajustar la posición de la ventana emergente
+                                ventanaEmergente.css('top', ventanaTop + 'px');
+                                ventanaEmergente.css('left', ventanaLeft + 'px');
+
+
+                                // Mostrar el botón de cierre
+                                var cerrarBoton = $('#cerrarVentanaEmergente');
+                                cerrarBoton.css('visibility', 'visible');
+
+                                // Agregar evento de clic al botón de cierre
+                                cerrarBoton.on('click', function() {
+                                    ventanaEmergente.css('display', 'none');
+                                });
+
+                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
+                                $(document).on('click', function(event) {
+                                    if (!ventanaEmergente.is(event.target) && ventanaEmergente.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
+                                        ventanaEmergente.css('display', 'none');
+                                    }
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error en la solicitud AJAX: ' + error);
+                                alert('Error en la solicitud AJAX al obtener los datos del usuario.');
+                            }
+                        });
+                    }
+                </script>
+
                 <label for="fecha_creacion">Fecha de Creación:</label>
                 <input type="text" id="fecha_creacion" name="fecha_creacion" value="<?php echo htmlspecialchars($fecha_creacion); ?>" readonly style="background-color: #f0f0f0; border: 1px solid #ccc; opacity: 0.7; cursor: not-allowed;">
 
@@ -691,16 +1175,16 @@
             </div>
         </div>
         <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var resumenField = document.getElementById('resumen');
+            document.addEventListener('DOMContentLoaded', function() {
+                var resumenField = document.getElementById('resumen');
 
-    resumenField.addEventListener('keydown', function(event) {
-        if (this.value.length >= 130 && event.key !== "Backspace" && event.key !== "Delete") {
-            event.preventDefault();
-        }
-    });
-});
-</script>
+                resumenField.addEventListener('keydown', function(event) {
+                    if (this.value.length >= 130 && event.key !== "Backspace" && event.key !== "Delete") {
+                        event.preventDefault();
+                    }
+                });
+            });
+        </script>
 
         <!-- Fin de las columnas -->
 
@@ -723,12 +1207,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="tab-Notas">
                 <button type="button" class="tablinks active" onclick="OrdenTabs(event, 'Notas')">Notas</button>
             </span>
-            <span class="tab-Componentes">
+
+            <!-- <span class="tab-Componentes">
                 <button type="button" class="tablinks" onclick="OrdenTabs(event, 'Series')">Informacion del usuario</button>
             </span>
+          
             <span class="tab-Actividades">
                 <button type="button" class="tablinks" onclick="OrdenTabs(event, 'Actividades')">Actividades</button>
-            </span>
+            </span>-->
         </div>
 
 
@@ -903,7 +1389,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 $correo_asignado = $fila['correo_asignado'];
                                 $correo_solicitante = $fila['correo_solicitante'];
                                 $body = $fila['body'];
-                                
+
 
 
 
@@ -911,8 +1397,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 // Dependiendo del tipo de cambio, puedes personalizar la visualización
                                 switch ($tipoHistorico) {
                                     case 'creacion':
-                                    
-                                       
+
+
                                         echo '<div style="font-family: Arial, sans-serif; border: 1px solid #e6e6e6; margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-left: 5px solid #bec1c6; font-weight: ">';
                                         echo '<div style="padding: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e6e6e6;">';
                                         echo '<span class="card-title" style="font-family: Arial, sans-serif; font-weight: 600;">' . $nombre_usuario_historico . '</span>'; // Nombre del usuario
@@ -924,14 +1410,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                         echo '<p>Estado: ' . $nombre_estado_actual . '</p>'; // Estado
                                         echo '</div>';
                                         echo '</div>';
-                                        
-                                      
-                                        
-                                      
-                                        
+
+
+
+
+
                                         break;
                                     case 'Asignación':
-                                      
+
                                         echo '<div style="font-family: Arial, sans-serif; border: 1px solid #e6e6e6; margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-left: 5px solid #bec1c6;">';
                                         echo '<div style="padding: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e6e6e6;">';
                                         echo '<span class="card-title" style="font-family: Arial, sans-serif; ">' . $nombre_usuario_historico . '</span>'; // Nombre del usuario
@@ -941,8 +1427,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                         echo '<p style="margin: 5px 0; color: #333;">Usuario Asignado : ' . $rutUsuarioAsignado . '</p>'; // Empresa
                                         echo '</div>';
                                         echo '</div>';
-                                   
-                                        
+
+
 
                                         break;
                                     case 'cambio':
@@ -958,24 +1444,24 @@ document.addEventListener('DOMContentLoaded', function() {
                                         // echo '<p>Motivo de Estado: ' . $motivo . '</p>';
                                         echo '</div>';
                                         echo '</div>';
-                                        
-                                    
-                                        
-                                        
+
+
+
+
 
                                         break;
 
                                     case 'adjunto':
-                                       
+
                                         echo '<div style="font-family: Arial, sans-serif; border: 1px solid #e6e6e6; margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-left: 5px solid #bec1c6; ">';
                                         echo '<div style="padding: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e6e6e6;">';
                                         echo '<span class="card-title" style="font-family: Arial, sans-serif; ">' . $nombre_usuario_historico . '</span>'; // Nombre del usuario
                                         echo '<span style="font-family: Arial, sans-serif; font-size: 0.8em; color: #000;">Cambios de campo · ' . $fechaHoraHistorico . '</span>'; // Fecha y hora
                                         echo '</div>';
                                         echo '<div class="card-body" style="font-family: Arial, sans-serif; padding: 10px 15px;">';
-                                      
-                                        
-                                        
+
+
+
 
                                         $rutaDescarga = obtenerRutaDescargaDesdeGCPStorage($nombre_GCP, $idHistorico);
 
@@ -1004,64 +1490,64 @@ document.addEventListener('DOMContentLoaded', function() {
                                         echo '</div>';
                                         echo '</div>';
                                         break;
-                                        case 'correo_enviado':
-                                            echo '<div class="correo-container">';
-                                            echo '<div class="correo-header">';
-                                            echo '<span class="correo-info">Sistema</span>';
-                                            echo '<span class="correo-timestamp">Correo electrónico enviado · ' . $fechaHoraHistorico . '</span>';
-                                            echo '</div>';
-                                            echo '<div class="correo-body">';
-                                            echo '<div class="correo-flex-container">';
-                                            echo '<div class="correo-titles">';
-                                            echo '<p class="correo-paragraph"><strong><i class="far fa-envelope"></i>:</strong></p>';
-                                            echo '<p class="correo-paragraph"><strong>Asunto:</strong></p>';
-                                            echo '<p class="correo-paragraph"><strong>Del:</strong></p>';
-                                            echo '<p class="correo-paragraph"><strong>Destino:</strong></p>';
-                                            echo '</div>';
-                                            echo '<div class="correo-texts">';
-                                            echo '<p class="correo-paragraph">Correo electrónico enviado</p>';
-                                            echo '<p class="correo-paragraph">' . $correo_asunto . '</p>';
-                                            echo '<p class="correo-paragraph">Soporte ManageMate</p>';
-                                            echo '<p class="correo-paragraph">' . $correo_asignado . '</p>';
-                                            echo '<p class="correo-paragraph">';
-                                            echo '<p class="correo-details" onclick="toggleBodyVisibility(\'bodyContentCorreoEnviado\')">Mostrar detalles de correo electrónico</p>';
-                                            echo '<div id="bodyContentCorreoEnviado" class="correo-body-content">' . $body . '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            break;
-                                    
-                                        case 'correo_enviado_solicitante':
-                                            echo '<div class="correo-container">';
-                                            echo '<div class="correo-header">';
-                                            echo '<span class="correo-info">Sistema</span>';
-                                            echo '<span class="correo-timestamp">Correo electrónico enviado · ' . $fechaHoraHistorico . '</span>';
-                                            echo '</div>';
-                                            echo '<div class="correo-body">';
-                                            echo '<div class="correo-flex-container">';
-                                            echo '<div class="correo-titles">';
-                                            echo '<p class="correo-paragraph"><strong><i class="far fa-envelope"></i>:</strong></p>';
-                                            echo '<p class="correo-paragraph"><strong>Asunto:</strong></p>';
-                                            echo '<p class="correo-paragraph"><strong>Del:</strong></p>';
-                                            echo '<p class="correo-paragraph"><strong>Destino:</strong></p>';
-                                            echo '</div>';
-                                            echo '<div class="correo-texts">';
-                                            echo '<p class="correo-paragraph">Correo electrónico enviado</p>';
-                                            echo '<p class="correo-paragraph">' . $correo_asunto . '</p>';
-                                            echo '<p class="correo-paragraph">Soporte ManageMate</p>';
-                                            echo '<p class="correo-paragraph">' . $correo_solicitante . '</p>';
-                                            echo '<p class="correo-paragraph">';
-                                            echo '<p class="correo-details" onclick="toggleBodyVisibility(\'bodyContent_correo_solicitante\')">Mostrar detalles de correo electrónico</p>';
-                                            echo '</p>';
-                                            echo '<div id="bodyContent_correo_solicitante" class="correo-body-content">' . $body . '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            break;
-                                            
-                                            
+                                    case 'correo_enviado':
+                                        echo '<div class="correo-container">';
+                                        echo '<div class="correo-header">';
+                                        echo '<span class="correo-info">Sistema</span>';
+                                        echo '<span class="correo-timestamp">Correo electrónico enviado · ' . $fechaHoraHistorico . '</span>';
+                                        echo '</div>';
+                                        echo '<div class="correo-body">';
+                                        echo '<div class="correo-flex-container">';
+                                        echo '<div class="correo-titles">';
+                                        echo '<p class="correo-paragraph"><strong><i class="far fa-envelope"></i>:</strong></p>';
+                                        echo '<p class="correo-paragraph"><strong>Asunto:</strong></p>';
+                                        echo '<p class="correo-paragraph"><strong>Del:</strong></p>';
+                                        echo '<p class="correo-paragraph"><strong>Destino:</strong></p>';
+                                        echo '</div>';
+                                        echo '<div class="correo-texts">';
+                                        echo '<p class="correo-paragraph">Correo electrónico enviado</p>';
+                                        echo '<p class="correo-paragraph">' . $correo_asunto . '</p>';
+                                        echo '<p class="correo-paragraph">Soporte ManageMate</p>';
+                                        echo '<p class="correo-paragraph">' . $correo_asignado . '</p>';
+                                        echo '<p class="correo-paragraph">';
+                                        echo '<p class="correo-details" onclick="toggleBodyVisibility(\'bodyContentCorreoEnviado\')">Mostrar detalles de correo electrónico</p>';
+                                        echo '<div id="bodyContentCorreoEnviado" class="correo-body-content">' . $body . '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        break;
+
+                                    case 'correo_enviado_solicitante':
+                                        echo '<div class="correo-container">';
+                                        echo '<div class="correo-header">';
+                                        echo '<span class="correo-info">Sistema</span>';
+                                        echo '<span class="correo-timestamp">Correo electrónico enviado · ' . $fechaHoraHistorico . '</span>';
+                                        echo '</div>';
+                                        echo '<div class="correo-body">';
+                                        echo '<div class="correo-flex-container">';
+                                        echo '<div class="correo-titles">';
+                                        echo '<p class="correo-paragraph"><strong><i class="far fa-envelope"></i>:</strong></p>';
+                                        echo '<p class="correo-paragraph"><strong>Asunto:</strong></p>';
+                                        echo '<p class="correo-paragraph"><strong>Del:</strong></p>';
+                                        echo '<p class="correo-paragraph"><strong>Destino:</strong></p>';
+                                        echo '</div>';
+                                        echo '<div class="correo-texts">';
+                                        echo '<p class="correo-paragraph">Correo electrónico enviado</p>';
+                                        echo '<p class="correo-paragraph">' . $correo_asunto . '</p>';
+                                        echo '<p class="correo-paragraph">Soporte ManageMate</p>';
+                                        echo '<p class="correo-paragraph">' . $correo_solicitante . '</p>';
+                                        echo '<p class="correo-paragraph">';
+                                        echo '<p class="correo-details" onclick="toggleBodyVisibility(\'bodyContent_correo_solicitante\')">Mostrar detalles de correo electrónico</p>';
+                                        echo '</p>';
+                                        echo '<div id="bodyContent_correo_solicitante" class="correo-body-content">' . $body . '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        break;
+
+
 
 
 
@@ -1117,24 +1603,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         <script>
-    // Ocultar el cuerpo al cargar la página
-    document.addEventListener("DOMContentLoaded", function() {
-        var bodyContent = document.getElementById("bodyContent");
-        bodyContent.style.display = "none";
-    });
-
-    
-    function toggleBodyVisibility(id) {
-        var element = document.getElementById(id);
-        if (element.style.display === "none") {
-            element.style.display = "block";
-        } else {
-            element.style.display = "none";
-        }
-    }
+            // Ocultar el cuerpo al cargar la página
+            document.addEventListener("DOMContentLoaded", function() {
+                var bodyContent = document.getElementById("bodyContent");
+                bodyContent.style.display = "none";
+            });
 
 
-</script>
+            function toggleBodyVisibility(id) {
+                var element = document.getElementById(id);
+                if (element.style.display === "none") {
+                    element.style.display = "block";
+                } else {
+                    element.style.display = "none";
+                }
+            }
+        </script>
 
 
 
@@ -1265,78 +1749,79 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         <script>
-// RUT validation functions
-var Fn = {
-    validaRut: function(rutCompleto) {
-        if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
-            return false;
-        var tmp = rutCompleto.split('-');
-        var digv = tmp[1]; 
-        var rut = tmp[0];
-        if (digv == 'K') digv = 'k';
-        return (Fn.dv(rut) == digv);
-    },
-    dv: function(T) {
-        var M = 0, S = 1;
-        for (; T; T = Math.floor(T / 10))
-            S = (S + T % 10 * (9 - M++ % 6)) % 11;
-        return S ? S - 1 : 'k';
-    },
-    mostrarError: function(mensaje) {
-        $("#rut_usuario_afectado-error").text(mensaje);
-    },
-    limpiarError: function() {
-        $("#rut_usuario_afectado-error").text("");
-    }
-};
+            // RUT validation functions
+            var Fn = {
+                validaRut: function(rutCompleto) {
+                    if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
+                        return false;
+                    var tmp = rutCompleto.split('-');
+                    var digv = tmp[1];
+                    var rut = tmp[0];
+                    if (digv == 'K') digv = 'k';
+                    return (Fn.dv(rut) == digv);
+                },
+                dv: function(T) {
+                    var M = 0,
+                        S = 1;
+                    for (; T; T = Math.floor(T / 10))
+                        S = (S + T % 10 * (9 - M++ % 6)) % 11;
+                    return S ? S - 1 : 'k';
+                },
+                mostrarError: function(mensaje) {
+                    $("#rut_usuario_afectado-error").text(mensaje);
+                },
+                limpiarError: function() {
+                    $("#rut_usuario_afectado-error").text("");
+                }
+            };
 
-// Document ready function for jQuery
-$(document).ready(function() {
-    // Keyup event for RUT validation
-    $("#Rut_usuario_afectado").keyup(function() {
-        var rut = $(this).val();
-        if (Fn.validaRut(rut)) {
-            Fn.limpiarError();
-        } else {
-            Fn.mostrarError("Formato de RUT debe ser xxxxxxxx-x sin puntos");
-        }
-    });
-});
-</script>
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var inputFields = [
-        document.getElementById('Nombre_user_completo_afectado'),
-        document.getElementById('Modelo'),
-        document.getElementById('Cargo_afectado'),
-        document.getElementById('Mandante_afectado')
-    ];
-
-    inputFields.forEach(function(field) {
-        field.addEventListener('keydown', function(event) {
-            if (this.value.length >= 50 && event.key !== "Backspace" && event.key !== "Delete") {
-                event.preventDefault();
-            }
-        });
-    });
-});
-</script>
+            // Document ready function for jQuery
+            $(document).ready(function() {
+                // Keyup event for RUT validation
+                $("#Rut_usuario_afectado").keyup(function() {
+                    var rut = $(this).val();
+                    if (Fn.validaRut(rut)) {
+                        Fn.limpiarError();
+                    } else {
+                        Fn.mostrarError("Formato de RUT debe ser xxxxxxxx-x sin puntos");
+                    }
+                });
+            });
+        </script>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var rutField = document.getElementById('Rut_usuario_afectado');
 
-    rutField.addEventListener('keydown', function(event) {
-        if (this.value.length >= 12 && event.key !== "Backspace" && event.key !== "Delete") {
-            event.preventDefault();
-        }
-    });
-});
-</script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var inputFields = [
+                    document.getElementById('Nombre_user_completo_afectado'),
+                    document.getElementById('Modelo'),
+                    document.getElementById('Cargo_afectado'),
+                    document.getElementById('Mandante_afectado')
+                ];
+
+                inputFields.forEach(function(field) {
+                    field.addEventListener('keydown', function(event) {
+                        if (this.value.length >= 50 && event.key !== "Backspace" && event.key !== "Delete") {
+                            event.preventDefault();
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var rutField = document.getElementById('Rut_usuario_afectado');
+
+                rutField.addEventListener('keydown', function(event) {
+                    if (this.value.length >= 12 && event.key !== "Backspace" && event.key !== "Delete") {
+                        event.preventDefault();
+                    }
+                });
+            });
+        </script>
 
 
 
@@ -1430,7 +1915,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <script src="../controllers/Js_functions/ajax_js_crearOT.js"></script> <!-- Scripts genéricos de la aplicación -->
 
 
-    <?php include("side_menu_bot.php");?>
+    <?php include("side_menu_bot.php"); ?>
 
 
 

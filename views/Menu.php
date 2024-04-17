@@ -20,13 +20,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/menu.css">
 
-   
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <?php
-   
+
     include('../controllers/validations/valid_time.php');
     include('../controllers/validations/controlador_permisos.php');
-    
+
 
     ?>
 
@@ -72,7 +72,7 @@
                                 } ?>
 
 
-                             
+
 
 
 
@@ -100,8 +100,20 @@
                                     ?>
                                 </select>
                             </div>
+                            <?php
+                            // Verificar si existe el parámetro filtro_numero_ticket en la URL
+                            if (isset($_GET['filtro_numero_ticket'])) {
+                                // Decodificar el valor base64
+                                $filtro_numero_ticket_decodificado = base64_decode($_GET['filtro_numero_ticket']);
+                                // Mostrar el valor decodificado en el campo de texto
+                                $valor_mostrado = htmlspecialchars($filtro_numero_ticket_decodificado);
+                            } else {
+                                // Si el parámetro no está presente, establecer el valor del campo de texto en blanco
+                                $valor_mostrado = '';
+                            }
+                            ?>
 
-                            <input class="form-control me-2" type="text" name="filtro_numero_ticket" placeholder="Buscar" style="height:28px; width :200px; border-radius: 2px; padding: 0px; margin: 0px; outline: none; box-shadow: none;" value="<?php echo isset($_GET['filtro_numero_ticket']) ? $_GET['filtro_numero_ticket'] : ''; ?>" style="flex: 1;">
+                            <input class="form-control me-2" type="text" name="filtro_numero_ticket" placeholder="Buscar" style="height:28px; width :200px; border-radius: 2px; padding: 0px; margin: 0px; outline: none; box-shadow: none;" value="<?php echo $valor_mostrado; ?>" style="flex: 1;">
                             <button class="btn btn-primary" type="submit" style="min-width: auto; width: 80px; height: 30px; border-radius: 5px; text-align: center; padding: 0px; margin: 0px;">Buscar</button>
 
 

@@ -347,12 +347,12 @@
             <span class="tab-Notas">
                 <button type="button" class="tablinks active" onclick="OrdenTabs(event, 'Notas')">Notas</button>
             </span>
-            <span class="tab-Componentes">
+       <!--     <span class="tab-Componentes">
                 <button type="button" class="tablinks" onclick="OrdenTabs(event, 'Series')">Informacion del usuario</button>
             </span>
             <span class="tab-Actividades">
                 <button type="button" class="tablinks" onclick="OrdenTabs(event, 'Actividades')">Actividades</button>
-            </span>
+            </span>-->
         </div>
 
 
