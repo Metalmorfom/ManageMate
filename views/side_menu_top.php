@@ -6,13 +6,20 @@
 
 
     <style>
+          html, body {
+            height: 100%; /* Asegura que el html y body ocupen toda la altura de la ventana */
+            margin: 0; /* Elimina los márgenes predeterminados */
+            padding: 0; /* Elimina los rellenos predeterminados */
+        }
+
         /* Estilos CSS para el side menu */
         .sidebar {
             height: 150vh;
             width: 250px;
             /* Ancho del side menu */
             position: absolute;
-            top: 70px;
+            min-height: 100vh; /* Altura mínima del viewport para cubrir todo el alto inicialmente */
+            top: 0px;  /* cambia a 70 si no funciona esta por js */
             left: -230px;
             /* Inicialmente oculto */
             background-color: #343a40 !important;
@@ -21,6 +28,11 @@
             /* Transición suave para el movimiento ojaaa */
             z-index: 100;
         }
+
+        /* El contenedor del sidebar debería tener una posición relativa */
+.side-menu-top-container {
+    position: relative;
+}
 
         .sidebar a {
             padding: 10px;
@@ -59,12 +71,6 @@
             z-index: 200;
         }
 
-        .side-menu-top-container,
-        .side-menu-bot-container {
-            height: 100%;
-            /* Ajustar la altura al 100% del cuerpo si es necesario */
-        }
-
         /* Nuevos estilos adicionales */
         .sidebar li {
             margin-bottom: 10px;
@@ -99,7 +105,23 @@
         }
     </style>
 
+<script>
+// JavaScript
+function adjustSidebarHeight() {
+    var sidebar = document.querySelector('.sidebar');
+    var bodyHeight = document.body.scrollHeight; // Altura total del contenido
+    var viewportHeight = window.innerHeight; // Altura del viewport
+    var newSidebarHeight = Math.max(bodyHeight, viewportHeight) + 'px'; // Elige el más grande
 
+    sidebar.style.height = newSidebarHeight; // Ajusta la altura del sidebar
+}
+
+// Ajusta la altura cuando la página se carga y cuando se cambia el tamaño del ventana
+window.addEventListener('load', adjustSidebarHeight);
+window.addEventListener('resize', adjustSidebarHeight);
+
+
+</script>
 
     <div class="side-menu-top-container">
         <!-- Side menu -->
