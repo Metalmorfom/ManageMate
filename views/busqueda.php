@@ -53,7 +53,7 @@
 
     ?>
 
-
+<?php include("side_menu_top.php");?>
     <nav class="menu-horizontal">
         <ul class="menu-items">
             <li>
@@ -1429,6 +1429,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <script src="../controllers/Js_functions/ajax_js_crearOT.js"></script> <!-- Scripts genéricos de la aplicación -->
 
+
+    <?php include("side_menu_bot.php");?>
 
 
 

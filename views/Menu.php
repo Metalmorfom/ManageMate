@@ -75,14 +75,6 @@
                              
 
 
-                                <?php
-                                // Define los permisos requeridos como un array
-                                $request = [1];
-                                // Llama a la función para verificar los permisos
-                                if (verificarPermisos($request)) {
-                                    echo '<li><a class="dropdown-item" href="Listar_OT.php">Listar tickets</a></li>';
-                                } ?>
-
 
                                 <!--<li><a class="dropdown-item" href="busqueda.php">Busqueda</a></li>-->
 
