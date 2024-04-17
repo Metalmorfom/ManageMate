@@ -122,7 +122,7 @@
             $request = [1];
             // Llama a la función para verificar los permisos
             if (verificarPermisos($request)) {
-                echo '<li><a class="dropdown-item" href="Listar_OT.php">Listar tickets</a></li>';
+                echo '<li><a class="item" href="Listar_OT.php">Listar tickets</a></li>';
             } ?>
 
 

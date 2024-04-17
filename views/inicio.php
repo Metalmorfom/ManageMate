@@ -159,7 +159,7 @@
             </div>
 
             <style>
-                a:hover {
+                .card_wrapper a:hover {
                     color: orange !important;
                 }
             </style>
