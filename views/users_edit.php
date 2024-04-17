@@ -30,22 +30,26 @@
     include("menu.php");
     include("../config/conexion_bd.php");
     ?>
-
+    <?php include("side_menu_top.php"); ?>
     <nav class="menu-horizontal">
         <ul class="menu-items">
             <li>
-            <h3 style="color: #007BFF; padding: 10px;">Modificar usuarios</h3>
+                <h3 style="color: #007BFF; padding: 10px;">Modificar usuarios</h3>
             </li>
         </ul>
         <ul class="menu-items" id="archivoListNav"> <!-- Elemento para mostrar archivos adjuntos -->
             <!-- Aquí se mostrarán los archivos adjuntos -->
 
-          
+            <a href="users.php" class="Cancel_mininav">
+                <i class="fas fa-arrow-left"></i> Regresar
+            </a>
+
+
 
             <button id="guardar-permisos-externo" value="Crear Ticket" class="submit_mininav">
-                    <i class="fas fa-save"></i> Grabar Cambios
+                <i class="fas fa-save"></i> Grabar Cambios
 
-                </button>
+            </button>
 
         </ul>
     </nav>
@@ -252,16 +256,16 @@
                 <h3>Editar Permisos</h3>
                 <div class="permisos-container">
                     <div class="tabla-izquierda">
-                        <div class="filtro_tablas"> 
-                        <!-- Campo de búsqueda para Permisos Disponibles -->
-                        <input type="text" class="input_wrapper" id="busqueda-permisos-disponibles" placeholder="Buscar permisos disponibles">
-                        <!-- Campo de selección para el tipo de búsqueda en Permisos Disponibles -->
-                        <select  class="select_wrapper" id="tipo-busqueda-disponibles">
-                            <option value="id">ID</option>
-                            <option value="nombre">Nombre</option>
-                            <option value="tipo">Tipo</option>
-                            <option value="detalle">Detalle</option>
-                        </select>
+                        <div class="filtro_tablas">
+                            <!-- Campo de búsqueda para Permisos Disponibles -->
+                            <input type="text" class="input_wrapper" id="busqueda-permisos-disponibles" placeholder="Buscar permisos disponibles">
+                            <!-- Campo de selección para el tipo de búsqueda en Permisos Disponibles -->
+                            <select class="select_wrapper" id="tipo-busqueda-disponibles">
+                                <option value="id">ID</option>
+                                <option value="nombre">Nombre</option>
+                                <option value="tipo">Tipo</option>
+                                <option value="detalle">Detalle</option>
+                            </select>
                         </div>
 
                         <h4 class="sticky-title">
@@ -289,17 +293,17 @@
 
                     <div class="tabla-derecha">
 
-                    <div class="filtro_tablas"> 
-                        <!-- Campo de búsqueda para Permisos Seleccionados -->
-                        <input type="text"  class="input_wrapper" id="busqueda-permisos-seleccionados" placeholder="Buscar permisos seleccionados">
-                        <!-- Campo de selección para el tipo de búsqueda en Permisos Seleccionados -->
-                        <select class="select_wrapper" id="tipo-busqueda-seleccionados">
-                            <option value="id">ID</option>
-                            <option value="nombre">Nombre</option>
-                            <option value="tipo">Tipo</option>
-                            <option value="detalle">Detalle</option>
-                        </select>
-                    </div>
+                        <div class="filtro_tablas">
+                            <!-- Campo de búsqueda para Permisos Seleccionados -->
+                            <input type="text" class="input_wrapper" id="busqueda-permisos-seleccionados" placeholder="Buscar permisos seleccionados">
+                            <!-- Campo de selección para el tipo de búsqueda en Permisos Seleccionados -->
+                            <select class="select_wrapper" id="tipo-busqueda-seleccionados">
+                                <option value="id">ID</option>
+                                <option value="nombre">Nombre</option>
+                                <option value="tipo">Tipo</option>
+                                <option value="detalle">Detalle</option>
+                            </select>
+                        </div>
                         <h4 class="sticky-title">Permisos Seleccionados</h4>
                         <!-- Tabla de Permisos Seleccionados -->
                         <table id="permisos-seleccionados" class="permisos-tabla">
@@ -322,7 +326,7 @@
 
 
             </div>
-           
+
 
 
     </div>
@@ -333,155 +337,155 @@
     </form>
 
     <script>
-    // Obtener elementos del DOM para Permisos Disponibles
-    const tipoBusquedaDisponibles = document.getElementById("tipo-busqueda-disponibles");
-    const busquedaDisponibles = document.getElementById("busqueda-permisos-disponibles");
-    const tablaPermisosDisponibles = document.getElementById("permisos-disponibles").getElementsByTagName("tbody")[0];
+        // Obtener elementos del DOM para Permisos Disponibles
+        const tipoBusquedaDisponibles = document.getElementById("tipo-busqueda-disponibles");
+        const busquedaDisponibles = document.getElementById("busqueda-permisos-disponibles");
+        const tablaPermisosDisponibles = document.getElementById("permisos-disponibles").getElementsByTagName("tbody")[0];
 
-    // Obtener elementos del DOM para Permisos Seleccionados
-    const tipoBusquedaSeleccionados = document.getElementById("tipo-busqueda-seleccionados");
-    const busquedaSeleccionados = document.getElementById("busqueda-permisos-seleccionados");
-    const tablaPermisosSeleccionados = document.getElementById("permisos-seleccionados").getElementsByTagName("tbody")[0];
+        // Obtener elementos del DOM para Permisos Seleccionados
+        const tipoBusquedaSeleccionados = document.getElementById("tipo-busqueda-seleccionados");
+        const busquedaSeleccionados = document.getElementById("busqueda-permisos-seleccionados");
+        const tablaPermisosSeleccionados = document.getElementById("permisos-seleccionados").getElementsByTagName("tbody")[0];
 
-    // Función para resaltar las coincidencias en una celda
-    function resaltarCoincidencias(celda, filtro) {
-        const contenido = celda.textContent.toLowerCase();
-        const contenidoOriginal = contenido.replace(/<span class="resaltado">(.*?)<\/span>/gi, '$1');
-        const coincidencias = contenidoOriginal.split(new RegExp(`(${filtro})`, 'gi'));
-        const contenidoResaltado = coincidencias.map(part => {
-            return filtro.toLowerCase() === part.toLowerCase() ? `<span class="resaltado">${part}</span>` : part;
-        }).join('');
-        celda.innerHTML = contenidoResaltado;
-    }
-
-    // Función para quitar el resaltado en una celda
-    function quitarResaltado(celda) {
-        const contenidoOriginal = celda.textContent.replace(/<span class="resaltado">(.*?)<\/span>/gi, '$1');
-        celda.innerHTML = contenidoOriginal;
-    }
-
-    // Función para limpiar el resaltado en todas las celdas de la tabla
-    function limpiarResaltadoTabla(tabla) {
-        const celdasResaltadas = tabla.querySelectorAll("span.resaltado");
-        celdasResaltadas.forEach((span) => {
-            const parent = span.parentNode;
-            parent.replaceChild(document.createTextNode(span.textContent), span);
-        });
-    }
-
-    // Función para filtrar y resaltar la tabla de Permisos
-    function filtrarYResaltarTabla(tabla, tipoBusqueda, busqueda) {
-        const tipo = tipoBusqueda.value.toLowerCase();
-        const filtro = busqueda.value.toLowerCase();
-
-        limpiarResaltadoTabla(tabla);
-
-        const filas = tabla.getElementsByTagName("tr");
-        for (let i = 0; i < filas.length; i++) {
-            const fila = filas[i];
-            const celda = fila.getElementsByTagName("td")[tipo === "id" ? 0 : tipo === "nombre" ? 1 : tipo === "tipo" ? 2 : 3];
-
-            if (celda) {
-                const contenido = celda.textContent.toLowerCase();
-                if (contenido.includes(filtro)) {
-                    resaltarCoincidencias(celda, filtro);
-                    fila.style.display = "";
-                } else {
-                    fila.style.display = "none";
-                }
-            }
+        // Función para resaltar las coincidencias en una celda
+        function resaltarCoincidencias(celda, filtro) {
+            const contenido = celda.textContent.toLowerCase();
+            const contenidoOriginal = contenido.replace(/<span class="resaltado">(.*?)<\/span>/gi, '$1');
+            const coincidencias = contenidoOriginal.split(new RegExp(`(${filtro})`, 'gi'));
+            const contenidoResaltado = coincidencias.map(part => {
+                return filtro.toLowerCase() === part.toLowerCase() ? `<span class="resaltado">${part}</span>` : part;
+            }).join('');
+            celda.innerHTML = contenidoResaltado;
         }
-    }
 
-    // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Disponibles
-    tipoBusquedaDisponibles.addEventListener("change", () => {
-        filtrarYResaltarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
-    });
-    busquedaDisponibles.addEventListener("input", () => {
-        filtrarYResaltarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
-    });
-
-    // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Seleccionados
-    tipoBusquedaSeleccionados.addEventListener("change", () => {
-        filtrarYResaltarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
-    });
-    busquedaSeleccionados.addEventListener("input", () => {
-        filtrarYResaltarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
-    });
-
-    // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Disponibles
-    busquedaDisponibles.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
+        // Función para quitar el resaltado en una celda
+        function quitarResaltado(celda) {
+            const contenidoOriginal = celda.textContent.replace(/<span class="resaltado">(.*?)<\/span>/gi, '$1');
+            celda.innerHTML = contenidoOriginal;
         }
-    });
 
-    // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Seleccionados
-    busquedaSeleccionados.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
+        // Función para limpiar el resaltado en todas las celdas de la tabla
+        function limpiarResaltadoTabla(tabla) {
+            const celdasResaltadas = tabla.querySelectorAll("span.resaltado");
+            celdasResaltadas.forEach((span) => {
+                const parent = span.parentNode;
+                parent.replaceChild(document.createTextNode(span.textContent), span);
+            });
         }
-    });
 
-    // Función para filtrar la tabla de Permisos
-    function filtrarTabla(tabla, tipoBusqueda, busqueda) {
-        const tipo = tipoBusqueda.value.toLowerCase();
-        const filtro = busqueda.value.toLowerCase();
+        // Función para filtrar y resaltar la tabla de Permisos
+        function filtrarYResaltarTabla(tabla, tipoBusqueda, busqueda) {
+            const tipo = tipoBusqueda.value.toLowerCase();
+            const filtro = busqueda.value.toLowerCase();
 
-        const terminos = filtro.split(";").map(term => term.trim()); // Separa los términos por punto y coma
+            limpiarResaltadoTabla(tabla);
 
-        const filas = tabla.getElementsByTagName("tr");
-        for (let i = 0; i < filas.length; i++) {
-            const fila = filas[i];
-            const celda = fila.getElementsByTagName("td")[tipo === "id" ? 0 : tipo === "nombre" ? 1 : tipo === "tipo" ? 2 : 3];
+            const filas = tabla.getElementsByTagName("tr");
+            for (let i = 0; i < filas.length; i++) {
+                const fila = filas[i];
+                const celda = fila.getElementsByTagName("td")[tipo === "id" ? 0 : tipo === "nombre" ? 1 : tipo === "tipo" ? 2 : 3];
 
-            if (celda) {
-                const contenido = celda.textContent.toLowerCase();
-                let coincidenciaEnFila = false;
-
-                for (const termino of terminos) {
-                    if (contenido.includes(termino)) {
-                        coincidenciaEnFila = true;
-                        resaltarCoincidencias(celda, termino);
-                        break; // Si encuentra al menos un término, no es necesario seguir buscando
+                if (celda) {
+                    const contenido = celda.textContent.toLowerCase();
+                    if (contenido.includes(filtro)) {
+                        resaltarCoincidencias(celda, filtro);
+                        fila.style.display = "";
+                    } else {
+                        fila.style.display = "none";
                     }
                 }
-
-                fila.style.display = coincidenciaEnFila ? "" : "none";
             }
         }
-    }
 
-    // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Disponibles
-    tipoBusquedaDisponibles.addEventListener("change", () => {
-        filtrarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
-    });
-    busquedaDisponibles.addEventListener("input", () => {
-        filtrarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
-    });
+        // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Disponibles
+        tipoBusquedaDisponibles.addEventListener("change", () => {
+            filtrarYResaltarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
+        });
+        busquedaDisponibles.addEventListener("input", () => {
+            filtrarYResaltarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
+        });
 
-    // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Seleccionados
-    tipoBusquedaSeleccionados.addEventListener("change", () => {
-        filtrarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
-    });
-    busquedaSeleccionados.addEventListener("input", () => {
-        filtrarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
-    });
+        // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Seleccionados
+        tipoBusquedaSeleccionados.addEventListener("change", () => {
+            filtrarYResaltarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
+        });
+        busquedaSeleccionados.addEventListener("input", () => {
+            filtrarYResaltarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
+        });
 
-    // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Disponibles
-    busquedaDisponibles.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
+        // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Disponibles
+        busquedaDisponibles.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        });
+
+        // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Seleccionados
+        busquedaSeleccionados.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        });
+
+        // Función para filtrar la tabla de Permisos
+        function filtrarTabla(tabla, tipoBusqueda, busqueda) {
+            const tipo = tipoBusqueda.value.toLowerCase();
+            const filtro = busqueda.value.toLowerCase();
+
+            const terminos = filtro.split(";").map(term => term.trim()); // Separa los términos por punto y coma
+
+            const filas = tabla.getElementsByTagName("tr");
+            for (let i = 0; i < filas.length; i++) {
+                const fila = filas[i];
+                const celda = fila.getElementsByTagName("td")[tipo === "id" ? 0 : tipo === "nombre" ? 1 : tipo === "tipo" ? 2 : 3];
+
+                if (celda) {
+                    const contenido = celda.textContent.toLowerCase();
+                    let coincidenciaEnFila = false;
+
+                    for (const termino of terminos) {
+                        if (contenido.includes(termino)) {
+                            coincidenciaEnFila = true;
+                            resaltarCoincidencias(celda, termino);
+                            break; // Si encuentra al menos un término, no es necesario seguir buscando
+                        }
+                    }
+
+                    fila.style.display = coincidenciaEnFila ? "" : "none";
+                }
+            }
         }
-    });
 
-    // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Seleccionados
-    busquedaSeleccionados.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-        }
-    });
-</script>
+        // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Disponibles
+        tipoBusquedaDisponibles.addEventListener("change", () => {
+            filtrarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
+        });
+        busquedaDisponibles.addEventListener("input", () => {
+            filtrarTabla(tablaPermisosDisponibles, tipoBusquedaDisponibles, busquedaDisponibles);
+        });
+
+        // Agregar eventos de cambio de valor al campo de selección y entrada de texto para Permisos Seleccionados
+        tipoBusquedaSeleccionados.addEventListener("change", () => {
+            filtrarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
+        });
+        busquedaSeleccionados.addEventListener("input", () => {
+            filtrarTabla(tablaPermisosSeleccionados, tipoBusquedaSeleccionados, busquedaSeleccionados);
+        });
+
+        // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Disponibles
+        busquedaDisponibles.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        });
+
+        // Evitar que la tecla "Enter" afecte a ambas tablas al mismo tiempo en Permisos Seleccionados
+        busquedaSeleccionados.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        });
+    </script>
 
 
 
@@ -512,25 +516,25 @@
             height: 50px;
 
         }
+
         .resaltado {
-    background-color: yellow; /* Puedes ajustar el color de resaltado aquí */
-    font-weight: bold;
-}
+            background-color: yellow;
+            /* Puedes ajustar el color de resaltado aquí */
+            font-weight: bold;
+        }
 
-.filtro_tablas {
-    display: flex;
-    justify-content: space-between;
-}
+        .filtro_tablas {
+            display: flex;
+            justify-content: space-between;
+        }
 
-.input_wrapper {
-    flex: 80%;
-}
+        .input_wrapper {
+            flex: 80%;
+        }
 
-.select_wrapper {
-    flex: 20%;
-}
-
-
+        .select_wrapper {
+            flex: 20%;
+        }
     </style>
 
 
@@ -711,9 +715,9 @@
 
 
 
-    
-    <script src="../controllers/Js_functions/main.js"></script>
 
+    <script src="../controllers/Js_functions/main.js"></script>
+    <?php include("side_menu_bot.php"); ?>
 </body>
 
 </html>

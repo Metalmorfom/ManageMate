@@ -27,7 +27,7 @@
     include("../config/conexion_bd.php");
     include("../controllers/controlador_makeOT.php");
     ?>
-
+<?php include("side_menu_top.php");?>
 
     <nav class="menu-horizontal">
         <ul class="menu-items">
@@ -470,6 +470,7 @@
     <script src="../controllers/Js_functions/genericos.js"></script> <!-- Scripts genéricos de la aplicación -->
 
 
+    <?php include("side_menu_bot.php");?>
 
 
 </body>

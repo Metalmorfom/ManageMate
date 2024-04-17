@@ -157,3 +157,32 @@ a:hover {
     padding-right: 5px;
     margin-right: 10px;
 }
+
+.content_top {
+    margin-left: 25px;
+}
+
+
+/* Estilo para los botones con clase "cancel_mininav" */
+.Cancel_mininav {
+    background-color: #007BFF;
+    /* Color de fondo */
+    color: #FFFFFF;
+    /* Color del texto */
+    padding: 10px 20px;
+    /* Espaciado interior */
+    border: none;
+    /* Sin borde */
+    border-radius: 5px;
+    /* Borde redondeado */
+    cursor: pointer;
+    /* Cambiar el cursor al pasar el mouse */
+    margin-right: 25px;
+   
+}
+
+.Cancel_mininav:hover{
+
+    text-decoration: none; /* Quita el subrayado */
+    color: inherit; /* Hereda el color del texto */
+}

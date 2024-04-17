@@ -72,21 +72,8 @@
                                 } ?>
 
 
-                                <?php
-                                // Define los permisos requeridos como un array
-                                $request = [4];
-                                // Llama a la función para verificar los permisos
-                                if (verificarPermisos($request)) {
-                                    echo '<li><a class="dropdown-item" href="registro.php">Crear usuarios</a></li>';
-                                } ?>
+                             
 
-                                <?php
-                                // Define los permisos requeridos como un array
-                                $request = [2];
-                                // Llama a la función para verificar los permisos
-                                if (verificarPermisos($request)) {
-                                    echo ' <li><a class="dropdown-item" href="makeot.php">Crear ticket</a></li>';
-                                } ?>
 
                                 <?php
                                 // Define los permisos requeridos como un array
@@ -96,23 +83,9 @@
                                     echo '<li><a class="dropdown-item" href="Listar_OT.php">Listar tickets</a></li>';
                                 } ?>
 
-                                <?php
-                                // Define los permisos requeridos como un array
-                                $request = [4];
-                                // Llama a la función para verificar los permisos
-                                if (verificarPermisos($request)) {
-                                    echo ' <li><a class="dropdown-item" href="users.php">Listar usuarios</a></li>';
-                                } else echo ' <li><a class="dropdown-item" href="users.php">Listar usuarios</a></li>'; ?>
 
                                 <!--<li><a class="dropdown-item" href="busqueda.php">Busqueda</a></li>-->
 
-                                <?php
-                                // Define los permisos requeridos como un array
-                                $request = [12];
-                                // Llama a la función para verificar los permisos
-                                if (verificarPermisos($request)) {
-                                    echo '<li> <button class="dropdown-item" type="button" onclick="abrirVentanaEmergente();">Test SMTP</button></li>';
-                                } ?>
 
                                 <li><a class="dropdown-item" href="../controllers/logout.php">Cerrar Sesión</a></li>
                                 <!-- Agrega más elementos aquí si es necesario -->

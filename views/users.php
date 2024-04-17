@@ -20,6 +20,7 @@
     include("menu.php");
     include("../config/conexion_bd.php");
     ?>
+<?php include("side_menu_top.php");?>
 
     <nav class="menu-horizontal">
         <ul class="menu-items">
@@ -110,7 +111,7 @@
     <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
     <script src="../controllers/Js_functions/users_list.js"> </script>
-
+    <?php include("side_menu_bot.php");?>
 </body>
 
 </html>
