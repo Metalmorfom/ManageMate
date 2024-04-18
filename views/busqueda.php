@@ -652,7 +652,7 @@
                             <label for="giro_comercialEmpresa">Giro:</label>
                             <div id="giro_comercialEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-                            <label for="comunaEmpresa">Comuna:</label>
+                            <label for="descripcionEmpresa">Descripción:</label>
                             <div id="comunaEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
                         </div>
                     </div>
