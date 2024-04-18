@@ -638,8 +638,8 @@
                             <label for="ciudadEmpresa">Ciudad:</label>
                             <div id="ciudadEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-                            <label for="paisEmpresa">País:</label>
-                            <div id="paisEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                            <label for="regionEmpresa">Region:</label>
+                            <div id="regionEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
                         </div>
                         <div class="campo-formulario">
                             <label for="telefonoEmpresa">Teléfono:</label>
@@ -649,11 +649,11 @@
                             <div id="correoEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
                         </div>
                         <div class="campo-formulario">
-                            <label for="sitioWebEmpresa">Sitio Web:</label>
-                            <div id="sitioWebEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                            <label for="giro_comercialEmpresa">Giro:</label>
+                            <div id="giro_comercialEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-                            <label for="descripcionEmpresa">Descripción:</label>
-                            <div id="descripcionEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+                            <label for="comunaEmpresa">Comuna:</label>
+                            <div id="comunaEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
                         </div>
                     </div>
                     <!-- Botón de cierre -->
@@ -664,14 +664,14 @@
                 <script>
                     function mostrarDatosEmpresa(boton) {
                         // Obtener el valor del input hidden
-                        var empresa_user_generador = $('#empresa_user_generador').val();
+                        var rutEmpresaHidden = $('#rutEmpresaHidden').val();
 
                         // Enviar solicitud AJAX
                         $.ajax({
                             url: '../controllers/ajax_mini/empresa_por.php', // Reemplaza con la URL correcta de tu script PHP
                             type: 'POST',
                             data: {
-                                empresa_usuario: empresa_user_generador
+                                empresa_usuario: rutEmpresaHidden
                             },
                             success: function(response) {
                                 // Parsear los datos JSON recibidos
@@ -683,13 +683,13 @@
 
                                 // Mostrar el contenido en la ventana emergente
                                 $('#nombreEmpresa').text(datosEmpresa.nombre);
-                                $('#direccionEmpresa').text(datosEmpresa.direccion);
-                                $('#ciudadEmpresa').text(datosEmpresa.ciudad);
-                                $('#paisEmpresa').text(datosEmpresa.pais);
+                                $('#direccionEmpresa').text(datosEmpresa.direc_casa_matriz);
+                                $('#ciudadEmpresa').text(datosEmpresa.nombre_ciudad);
+                                $('#regionEmpresa').text(datosEmpresa.nombre_region);
                                 $('#telefonoEmpresa').text(datosEmpresa.telefono);
                                 $('#correoEmpresa').text(datosEmpresa.correo);
-                                $('#sitioWebEmpresa').text(datosEmpresa.sitio_web);
-                                $('#descripcionEmpresa').text(datosEmpresa.descripcion);
+                                $('#giro_comercialEmpresa').text(datosEmpresa.giro_comercial);
+                                $('#comunaEmpresa').text(datosEmpresa.nombre_comuna);
 
                                 // Obtener la posición original del botón
                                 var botonRect = boton.getBoundingClientRect();
