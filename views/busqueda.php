@@ -623,69 +623,77 @@
                 <input type="hidden" id="rut_cliente" name="rut_cliente" value="<?php echo htmlspecialchars($cliente_rut_cliente); ?>">
 
                 <div id="listaClientes" class="lista-sugerencias"></div>
-                <button type="button" onclick="mostrarDatosCliente(this)">
-    <i class="fas fa-info-circle"></i> <!-- Icono de información -->
-</button>
 
-<div id="ventanaEmergenteCliente" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
+                <div class="busqueda-container">
+                    <label for="asignado">Asignado:</label>
+                    <input type="search" id="asignado" name="asignado" value="<?php echo htmlspecialchars($usuarios_rut_user); ?>" autocomplete="off" onkeyup="buscarUsuario(this.value)">
+                    <input type="hidden" id="rut_user_asignado" name="rut_user_asignado" value="<?php echo htmlspecialchars($usuarios_rut_user_rut); ?>">
+                    <div id="listaUsuarios" class="lista-sugerencias"></div>
+                    <div id="mensajeErrorUsuario" style="color: red; display: none;"></div>
+
+                </div>
+
+
+<div id="ventanaEmergenteAsignado" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
     <!-- Título de la ventana -->
-    <h3 style="margin-bottom: 10px;">Información del Cliente</h3>
+    <h3 style="margin-bottom: 10px;">Información de Asignado</h3>
 
     <!-- Contenido de la ventana emergente organizado en tres columnas -->
-    <div id="contenidoVentanaEmergenteCliente" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
+    <div id="contenidoVentanaEmergenteAsignado" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
         <div class="campo-formulario">
-            <label for="nombreCliente">Nombre:</label>
-            <div id="nombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="nombreAsignado">Nombre:</label>
+            <div id="nombreAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-            <label for="segundoNombreCliente">Segundo Nombre:</label>
-            <div id="segundoNombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="segundoNombreAsignado">Segundo Nombre:</label>
+            <div id="segundoNombreAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-            <label for="apellidoPaternoCliente">Apellido:</label>
-            <div id="apellidoPaternoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="apellidoPaternoAsignado">Apellido Paterno:</label>
+            <div id="apellidoPaternoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-           
+            <label for="apellidoMaternoAsignado">Apellido Materno:</label>
+            <div id="apellidoMaternoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
         </div>
         <div class="campo-formulario">
-            <label for="correoCliente">Correo:</label>
-            <div id="correoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="correoAsignado">Correo:</label>
+            <div id="correoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
         </div>
         <div class="campo-formulario">
-            <label for="telefonoCliente">Teléfono:</label>
-            <div id="telefonoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="telefonoAsignado">Teléfono:</label>
+            <div id="telefonoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
         </div>
     </div>
     <!-- Botón de cierre -->
-    <button type="button" id="cerrarVentanaEmergenteCliente" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
+    <button type="button" id="cerrarVentanaEmergenteAsignado" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function mostrarDatosCliente(boton) {
+    function mostrarDatosAsignado(boton) {
         // Obtener el valor del input hidden
-        var rut_cliente = $('#rut_cliente').val();
+        var asignado_user_generador = $('#rut_user_asignado').val();
 
         // Enviar solicitud AJAX
         $.ajax({
-            url: '../controllers/ajax_mini/cliente_por.php', // Reemplaza con la URL correcta de tu script PHP
+            url: '../controllers/ajax_mini/asignado_por.php', // Reemplaza con la URL correcta de tu script PHP
             type: 'POST',
             data: {
-                cliente_usuario: rut_cliente
+                asignado_usuario: asignado_user_generador
             },
             success: function(response) {
                 // Parsear los datos JSON recibidos
-                var datosCliente = JSON.parse(response);
+                var datosAsignado = JSON.parse(response);
 
                 // Mostrar la ventana emergente
-                var ventanaEmergenteCliente = $('#ventanaEmergenteCliente');
-                ventanaEmergenteCliente.css('display', 'block');
+                var ventanaEmergenteAsignado = $('#ventanaEmergenteAsignado');
+                ventanaEmergenteAsignado.css('display', 'block');
 
                 // Mostrar el contenido en la ventana emergente
-                $('#nombreCliente').text(datosCliente.nombre);
-                $('#segundoNombreCliente').text(datosCliente.s_nombre);
-                $('#apellidoPaternoCliente').text(datosCliente.apellidos);
-              
-                $('#correoCliente').text(datosCliente.correo);
-                $('#telefonoCliente').text(datosCliente.telefono);
+                $('#nombreAsignado').text(datosAsignado.nombre);
+                $('#segundoNombreAsignado').text(datosAsignado.s_nombre);
+                $('#apellidoPaternoAsignado').text(datosAsignado.ap_paterno);
+                $('#apellidoMaternoAsignado').text(datosAsignado.ap_materno);
+                $('#correoAsignado').text(datosAsignado.correo);
+                $('#telefonoAsignado').text(datosAsignado.telefono);
 
                 // Obtener la posición original del botón
                 var botonRect = boton.getBoundingClientRect();
@@ -695,8 +703,8 @@
                 var ventanaLeft = botonRect.left - 50;
 
                 // Obtener el ancho y alto de la ventana emergente
-                var ventanaWidth = ventanaEmergenteCliente.outerWidth();
-                var ventanaHeight = ventanaEmergenteCliente.outerHeight();
+                var ventanaWidth = ventanaEmergenteAsignado.outerWidth();
+                var ventanaHeight = ventanaEmergenteAsignado.outerHeight();
 
                 // Verificar si la ventana emergente se sale del lado derecho del body
                 if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
@@ -709,162 +717,32 @@
                 }
 
                 // Ajustar la posición de la ventana emergente
-                ventanaEmergenteCliente.css('top', ventanaTop + 'px');
-                ventanaEmergenteCliente.css('left', ventanaLeft + 'px');
+                ventanaEmergenteAsignado.css('top', ventanaTop + 'px');
+                ventanaEmergenteAsignado.css('left', ventanaLeft + 'px');
 
                 // Mostrar el botón de cierre
-                var cerrarBoton = $('#cerrarVentanaEmergenteCliente');
+                var cerrarBoton = $('#cerrarVentanaEmergenteAsignado');
                 cerrarBoton.css('visibility', 'visible');
 
                 // Agregar evento de clic al botón de cierre
                 cerrarBoton.on('click', function() {
-                    ventanaEmergenteCliente.css('display', 'none');
+                    ventanaEmergenteAsignado.css('display', 'none');
                 });
 
                 // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
                 $(document).on('click', function(event) {
-                    if (!ventanaEmergenteCliente.is(event.target) && ventanaEmergenteCliente.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
-                        ventanaEmergenteCliente.css('display', 'none');
+                    if (!ventanaEmergenteAsignado.is(event.target) && ventanaEmergenteAsignado.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
+                        ventanaEmergenteAsignado.css('display', 'none');
                     }
                 });
             },
             error: function(xhr, status, error) {
                 console.error('Error en la solicitud AJAX: ' + error);
-                alert('Error en la solicitud AJAX al obtener los datos del cliente.');
+                alert('Error en la solicitud AJAX al obtener los datos del asignado.');
             }
         });
     }
 </script>
-
-
-
-
-
-
-
-                <div class="busqueda-container">
-                    <label for="asignado">Asignado:</label>
-                    <input type="search" id="asignado" name="asignado" value="<?php echo htmlspecialchars($usuarios_rut_user); ?>" autocomplete="off" onkeyup="buscarUsuario(this.value)">
-                    <input type="hidden" id="rut_user_asignado" name="rut_user_asignado" value="<?php echo htmlspecialchars($usuarios_rut_user_rut); ?>">
-
-                    <button type="button" onclick="mostrarDatosAsignado(this)">
-                        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
-                    </button>
-                    <div id="listaUsuarios" class="lista-sugerencias"></div>
-                    <div id="mensajeErrorUsuario" style="color: red; display: none;"></div>
-
-                </div>
-
-
-                <div id="ventanaEmergenteAsignado" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
-                    <!-- Título de la ventana -->
-                    <h3 style="margin-bottom: 10px;">Información de Asignado</h3>
-
-                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
-                    <div id="contenidoVentanaEmergenteAsignado" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
-                        <div class="campo-formulario">
-                            <label for="nombreAsignado">Nombre:</label>
-                            <div id="nombreAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="segundoNombreAsignado">Segundo Nombre:</label>
-                            <div id="segundoNombreAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="apellidoPaternoAsignado">Apellido Paterno:</label>
-                            <div id="apellidoPaternoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="apellidoMaternoAsignado">Apellido Materno:</label>
-                            <div id="apellidoMaternoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="correoAsignado">Correo:</label>
-                            <div id="correoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="telefonoAsignado">Teléfono:</label>
-                            <div id="telefonoAsignado" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                    </div>
-                    <!-- Botón de cierre -->
-                    <button type="button" id="cerrarVentanaEmergenteAsignado" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
-                </div>
-
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>
-                    function mostrarDatosAsignado(boton) {
-                        // Obtener el valor del input hidden
-                        var asignado_user_generador = $('#rut_user_asignado').val();
-
-                        // Enviar solicitud AJAX
-                        $.ajax({
-                            url: '../controllers/ajax_mini/asignado_por.php', // Reemplaza con la URL correcta de tu script PHP
-                            type: 'POST',
-                            data: {
-                                asignado_usuario: asignado_user_generador
-                            },
-                            success: function(response) {
-                                // Parsear los datos JSON recibidos
-                                var datosAsignado = JSON.parse(response);
-
-                                // Mostrar la ventana emergente
-                                var ventanaEmergenteAsignado = $('#ventanaEmergenteAsignado');
-                                ventanaEmergenteAsignado.css('display', 'block');
-
-                                // Mostrar el contenido en la ventana emergente
-                                $('#nombreAsignado').text(datosAsignado.nombre);
-                                $('#segundoNombreAsignado').text(datosAsignado.s_nombre);
-                                $('#apellidoPaternoAsignado').text(datosAsignado.ap_paterno);
-                                $('#apellidoMaternoAsignado').text(datosAsignado.ap_materno);
-                                $('#correoAsignado').text(datosAsignado.correo);
-                                $('#telefonoAsignado').text(datosAsignado.telefono);
-
-                                // Obtener la posición original del botón
-                                var botonRect = boton.getBoundingClientRect();
-
-                                // Ajustar la posición de la ventana emergente
-                                var ventanaTop = botonRect.bottom + 10;
-                                var ventanaLeft = botonRect.left - 50;
-
-                                // Obtener el ancho y alto de la ventana emergente
-                                var ventanaWidth = ventanaEmergenteAsignado.outerWidth();
-                                var ventanaHeight = ventanaEmergenteAsignado.outerHeight();
-
-                                // Verificar si la ventana emergente se sale del lado derecho del body
-                                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
-                                    ventanaLeft = document.body.clientWidth - ventanaWidth;
-                                }
-
-                                // Verificar si la ventana emergente se sale del lado inferior del body
-                                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
-                                    ventanaTop = document.body.clientHeight - ventanaHeight;
-                                }
-
-                                // Ajustar la posición de la ventana emergente
-                                ventanaEmergenteAsignado.css('top', ventanaTop + 'px');
-                                ventanaEmergenteAsignado.css('left', ventanaLeft + 'px');
-
-                                // Mostrar el botón de cierre
-                                var cerrarBoton = $('#cerrarVentanaEmergenteAsignado');
-                                cerrarBoton.css('visibility', 'visible');
-
-                                // Agregar evento de clic al botón de cierre
-                                cerrarBoton.on('click', function() {
-                                    ventanaEmergenteAsignado.css('display', 'none');
-                                });
-
-                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
-                                $(document).on('click', function(event) {
-                                    if (!ventanaEmergenteAsignado.is(event.target) && ventanaEmergenteAsignado.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
-                                        ventanaEmergenteAsignado.css('display', 'none');
-                                    }
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Error en la solicitud AJAX: ' + error);
-                                alert('Error en la solicitud AJAX al obtener los datos del asignado.');
-                            }
-                        });
-                    }
-                </script>
 
 
             </div>
@@ -943,37 +821,37 @@
                                 $('#correoUsuario').text(datosUsuario.correo);
                                 $('#telefonoUsuario').text(datosUsuario.telefono);
 
-                                // Obtener la posición original del botón
-                                var botonRect = boton.getBoundingClientRect();
+                 // Obtener la posición original del botón
+var botonRect = boton.getBoundingClientRect();
 
-                                // Ajustar la posición del botón para desplazarlo 50px a la izquierda
-                                var botonLeftAdjusted = botonRect.left - 50;
+// Ajustar la posición del botón para desplazarlo 50px a la izquierda
+var botonLeftAdjusted = botonRect.left - 50;
 
-                                // Calcular la posición de la ventana emergente basada en la posición ajustada del botón
-                                var ventanaTop = botonRect.bottom + 10;
-                                var ventanaLeft = botonLeftAdjusted;
+// Calcular la posición de la ventana emergente basada en la posición ajustada del botón
+var ventanaTop = botonRect.bottom + 10;
+var ventanaLeft = botonLeftAdjusted;
 
-                                // Obtener el ancho y alto del body
-                                var bodyWidth = document.body.clientWidth;
-                                var bodyHeight = document.body.clientHeight;
+// Obtener el ancho y alto del body
+var bodyWidth = document.body.clientWidth;
+var bodyHeight = document.body.clientHeight;
 
-                                // Obtener el ancho y alto de la ventana emergente
-                                var ventanaWidth = ventanaEmergente.outerWidth();
-                                var ventanaHeight = ventanaEmergente.outerHeight();
+// Obtener el ancho y alto de la ventana emergente
+var ventanaWidth = ventanaEmergente.outerWidth();
+var ventanaHeight = ventanaEmergente.outerHeight();
 
-                                // Verificar si la ventana emergente se sale del lado derecho del body
-                                if (ventanaLeft + ventanaWidth > bodyWidth) {
-                                    ventanaLeft = bodyWidth - ventanaWidth;
-                                }
+// Verificar si la ventana emergente se sale del lado derecho del body
+if (ventanaLeft + ventanaWidth > bodyWidth) {
+    ventanaLeft = bodyWidth - ventanaWidth;
+}
 
-                                // Verificar si la ventana emergente se sale del lado inferior del body
-                                if (ventanaTop + ventanaHeight > bodyHeight) {
-                                    ventanaTop = bodyHeight - ventanaHeight;
-                                }
+// Verificar si la ventana emergente se sale del lado inferior del body
+if (ventanaTop + ventanaHeight > bodyHeight) {
+    ventanaTop = bodyHeight - ventanaHeight;
+}
 
-                                // Ajustar la posición de la ventana emergente
-                                ventanaEmergente.css('top', ventanaTop + 'px');
-                                ventanaEmergente.css('left', ventanaLeft + 'px');
+// Ajustar la posición de la ventana emergente
+ventanaEmergente.css('top', ventanaTop + 'px');
+ventanaEmergente.css('left', ventanaLeft + 'px');
 
 
                                 // Mostrar el botón de cierre
@@ -998,6 +876,7 @@
                             }
                         });
                     }
+                    
                 </script>
 
                 <label for="fecha_creacion">Fecha de Creación:</label>
