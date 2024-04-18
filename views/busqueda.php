@@ -612,134 +612,11 @@
 
                     <input type="search" id="empresa" name="empresa" onkeyup="buscarEmpresa(this.value)" autocomplete="off" value="<?php echo htmlspecialchars($nombre_empresa); ?>">
                     <input type="hidden" id="rutEmpresaHidden" name="rut_empresa" value="<?php echo htmlspecialchars($rut_empresa); ?>">
-                    <button type="button" onclick="mostrarDatosEmpresa(this)">
-                        <i class="fas fa-info-circle"></i> <!-- Icono de información -->
-                    </button>
                     <div id="listaEmpresas" class="lista-sugerencias"></div>
 
                     <div id="mensajeErrorEmpresa" style="color: red; display: none;"></div>
 
                 </div>
-
-
-                <div id="ventanaEmergenteEmpresa" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
-                    <!-- Título de la ventana -->
-                    <h3 style="margin-bottom: 10px;">Información de la Empresa</h3>
-
-                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
-                    <div id="contenidoVentanaEmergenteEmpresa" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
-                        <div class="campo-formulario">
-                            <label for="nombreEmpresa">Nombre:</label>
-                            <div id="nombreEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="direccionEmpresa">Dirección:</label>
-                            <div id="direccionEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="ciudadEmpresa">Ciudad:</label>
-                            <div id="ciudadEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="regionEmpresa">Region:</label>
-                            <div id="regionEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="telefonoEmpresa">Teléfono:</label>
-                            <div id="telefonoEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="correoEmpresa">Correo:</label>
-                            <div id="correoEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="giro_comercialEmpresa">Giro:</label>
-                            <div id="giro_comercialEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-
-                            <label for="descripcionEmpresa">Descripción:</label>
-                            <div id="comunaEmpresa" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                    </div>
-                    <!-- Botón de cierre -->
-                    <button type="button" id="cerrarVentanaEmergenteEmpresa" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
-                </div>
-
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>
-                    function mostrarDatosEmpresa(boton) {
-                        // Obtener el valor del input hidden
-                        var rutEmpresaHidden = $('#rutEmpresaHidden').val();
-
-                        // Enviar solicitud AJAX
-                        $.ajax({
-                            url: '../controllers/ajax_mini/empresa_por.php', // Reemplaza con la URL correcta de tu script PHP
-                            type: 'POST',
-                            data: {
-                                empresa_usuario: rutEmpresaHidden
-                            },
-                            success: function(response) {
-                                // Parsear los datos JSON recibidos
-                                var datosEmpresa = JSON.parse(response);
-
-                                // Mostrar la ventana emergente
-                                var ventanaEmergenteEmpresa = $('#ventanaEmergenteEmpresa');
-                                ventanaEmergenteEmpresa.css('display', 'block');
-
-                                // Mostrar el contenido en la ventana emergente
-                                $('#nombreEmpresa').text(datosEmpresa.nombre);
-                                $('#direccionEmpresa').text(datosEmpresa.direc_casa_matriz);
-                                $('#ciudadEmpresa').text(datosEmpresa.nombre_ciudad);
-                                $('#regionEmpresa').text(datosEmpresa.nombre_region);
-                                $('#telefonoEmpresa').text(datosEmpresa.telefono);
-                                $('#correoEmpresa').text(datosEmpresa.correo);
-                                $('#giro_comercialEmpresa').text(datosEmpresa.giro_comercial);
-                                $('#comunaEmpresa').text(datosEmpresa.nombre_comuna);
-
-                                // Obtener la posición original del botón
-                                var botonRect = boton.getBoundingClientRect();
-
-                                // Ajustar la posición de la ventana emergente
-                                var ventanaTop = botonRect.bottom + 10;
-                                var ventanaLeft = botonRect.left - 50;
-
-                                // Obtener el ancho y alto de la ventana emergente
-                                var ventanaWidth = ventanaEmergenteEmpresa.outerWidth();
-                                var ventanaHeight = ventanaEmergenteEmpresa.outerHeight();
-
-                                // Verificar si la ventana emergente se sale del lado derecho del body
-                                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
-                                    ventanaLeft = document.body.clientWidth - ventanaWidth;
-                                }
-
-                                // Verificar si la ventana emergente se sale del lado inferior del body
-                                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
-                                    ventanaTop = document.body.clientHeight - ventanaHeight;
-                                }
-
-                                // Ajustar la posición de la ventana emergente
-                                ventanaEmergenteEmpresa.css('top', ventanaTop + 'px');
-                                ventanaEmergenteEmpresa.css('left', ventanaLeft + 'px');
-
-                                // Mostrar el botón de cierre
-                                var cerrarBoton = $('#cerrarVentanaEmergenteEmpresa');
-                                cerrarBoton.css('visibility', 'visible');
-
-                                // Agregar evento de clic al botón de cierre
-                                cerrarBoton.on('click', function() {
-                                    ventanaEmergenteEmpresa.css('display', 'none');
-                                });
-
-                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
-                                $(document).on('click', function(event) {
-                                    if (!ventanaEmergenteEmpresa.is(event.target) && ventanaEmergenteEmpresa.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
-                                        ventanaEmergenteEmpresa.css('display', 'none');
-                                    }
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Error en la solicitud AJAX: ' + error);
-                                alert('Error en la solicitud AJAX al obtener los datos de la empresa.');
-                            }
-                        });
-                    }
-                </script>
-
 
                 <label for="cliente">Solicitante:</label>
                 <input type="search" id="cliente" name="cliente" value="<?php echo htmlspecialchars($nombre_cliente); ?>" autocomplete="off" onkeyup="buscarCliente(this.value)">
@@ -747,117 +624,117 @@
 
                 <div id="listaClientes" class="lista-sugerencias"></div>
                 <button type="button" onclick="mostrarDatosCliente(this)">
-                    <i class="fas fa-info-circle"></i> <!-- Icono de información -->
-                </button>
+    <i class="fas fa-info-circle"></i> <!-- Icono de información -->
+</button>
 
-                <div id="ventanaEmergenteCliente" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
-                    <!-- Título de la ventana -->
-                    <h3 style="margin-bottom: 10px;">Información del Cliente</h3>
+<div id="ventanaEmergenteCliente" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 999; transform: translateY(10px); transition: transform 0.3s;">
+    <!-- Título de la ventana -->
+    <h3 style="margin-bottom: 10px;">Información del Cliente</h3>
 
-                    <!-- Contenido de la ventana emergente organizado en tres columnas -->
-                    <div id="contenidoVentanaEmergenteCliente" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
-                        <div class="campo-formulario">
-                            <label for="nombreCliente">Nombre:</label>
-                            <div id="nombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+    <!-- Contenido de la ventana emergente organizado en tres columnas -->
+    <div id="contenidoVentanaEmergenteCliente" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 10px;">
+        <div class="campo-formulario">
+            <label for="nombreCliente">Nombre:</label>
+            <div id="nombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-                            <label for="segundoNombreCliente">Segundo Nombre:</label>
-                            <div id="segundoNombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="segundoNombreCliente">Segundo Nombre:</label>
+            <div id="segundoNombreCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
-                            <label for="apellidoPaternoCliente">Apellidos:</label>
-                            <div id="apellidoPaternoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+            <label for="apellidoPaternoCliente">Apellido:</label>
+            <div id="apellidoPaternoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
 
+           
+        </div>
+        <div class="campo-formulario">
+            <label for="correoCliente">Correo:</label>
+            <div id="correoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+        </div>
+        <div class="campo-formulario">
+            <label for="telefonoCliente">Teléfono:</label>
+            <div id="telefonoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
+        </div>
+    </div>
+    <!-- Botón de cierre -->
+    <button type="button" id="cerrarVentanaEmergenteCliente" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
+</div>
 
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="correoCliente">Correo:</label>
-                            <div id="correoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="telefonoCliente">Teléfono:</label>
-                            <div id="telefonoCliente" class="valor-campo" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px;"></div>
-                        </div>
-                    </div>
-                    <!-- Botón de cierre -->
-                    <button type="button" id="cerrarVentanaEmergenteCliente" style="position: absolute; top: 5px; right: 5px; cursor: pointer; visibility: hidden;">X</button>
-                </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function mostrarDatosCliente(boton) {
+        // Obtener el valor del input hidden
+        var rut_cliente = $('#rut_cliente').val();
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>
-                    function mostrarDatosCliente(boton) {
-                        // Obtener el valor del input hidden
-                        var rut_cliente = $('#rut_cliente').val();
+        // Enviar solicitud AJAX
+        $.ajax({
+            url: '../controllers/ajax_mini/cliente_por.php', // Reemplaza con la URL correcta de tu script PHP
+            type: 'POST',
+            data: {
+                cliente_usuario: rut_cliente
+            },
+            success: function(response) {
+                // Parsear los datos JSON recibidos
+                var datosCliente = JSON.parse(response);
 
-                        // Enviar solicitud AJAX
-                        $.ajax({
-                            url: '../controllers/ajax_mini/cliente_por.php', // Reemplaza con la URL correcta de tu script PHP
-                            type: 'POST',
-                            data: {
-                                cliente_usuario: rut_cliente
-                            },
-                            success: function(response) {
-                                // Parsear los datos JSON recibidos
-                                var datosCliente = JSON.parse(response);
+                // Mostrar la ventana emergente
+                var ventanaEmergenteCliente = $('#ventanaEmergenteCliente');
+                ventanaEmergenteCliente.css('display', 'block');
 
-                                // Mostrar la ventana emergente
-                                var ventanaEmergenteCliente = $('#ventanaEmergenteCliente');
-                                ventanaEmergenteCliente.css('display', 'block');
+                // Mostrar el contenido en la ventana emergente
+                $('#nombreCliente').text(datosCliente.nombre);
+                $('#segundoNombreCliente').text(datosCliente.s_nombre);
+                $('#apellidoPaternoCliente').text(datosCliente.apellidos);
+              
+                $('#correoCliente').text(datosCliente.correo);
+                $('#telefonoCliente').text(datosCliente.telefono);
 
-                                // Mostrar el contenido en la ventana emergente
-                                $('#nombreCliente').text(datosCliente.nombre);
-                                $('#segundoNombreCliente').text(datosCliente.s_nombre);
-                                $('#apellidoPaternoCliente').text(datosCliente.apellidos);
+                // Obtener la posición original del botón
+                var botonRect = boton.getBoundingClientRect();
 
-                                $('#correoCliente').text(datosCliente.correo);
-                                $('#telefonoCliente').text(datosCliente.telefono);
+                // Ajustar la posición de la ventana emergente
+                var ventanaTop = botonRect.bottom + 10;
+                var ventanaLeft = botonRect.left - 50;
 
-                                // Obtener la posición original del botón
-                                var botonRect = boton.getBoundingClientRect();
+                // Obtener el ancho y alto de la ventana emergente
+                var ventanaWidth = ventanaEmergenteCliente.outerWidth();
+                var ventanaHeight = ventanaEmergenteCliente.outerHeight();
 
-                                // Ajustar la posición de la ventana emergente
-                                var ventanaTop = botonRect.bottom + 10;
-                                var ventanaLeft = botonRect.left - 50;
+                // Verificar si la ventana emergente se sale del lado derecho del body
+                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
+                    ventanaLeft = document.body.clientWidth - ventanaWidth;
+                }
 
-                                // Obtener el ancho y alto de la ventana emergente
-                                var ventanaWidth = ventanaEmergenteCliente.outerWidth();
-                                var ventanaHeight = ventanaEmergenteCliente.outerHeight();
+                // Verificar si la ventana emergente se sale del lado inferior del body
+                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
+                    ventanaTop = document.body.clientHeight - ventanaHeight;
+                }
 
-                                // Verificar si la ventana emergente se sale del lado derecho del body
-                                if (ventanaLeft + ventanaWidth > document.body.clientWidth) {
-                                    ventanaLeft = document.body.clientWidth - ventanaWidth;
-                                }
+                // Ajustar la posición de la ventana emergente
+                ventanaEmergenteCliente.css('top', ventanaTop + 'px');
+                ventanaEmergenteCliente.css('left', ventanaLeft + 'px');
 
-                                // Verificar si la ventana emergente se sale del lado inferior del body
-                                if (ventanaTop + ventanaHeight > document.body.clientHeight) {
-                                    ventanaTop = document.body.clientHeight - ventanaHeight;
-                                }
+                // Mostrar el botón de cierre
+                var cerrarBoton = $('#cerrarVentanaEmergenteCliente');
+                cerrarBoton.css('visibility', 'visible');
 
-                                // Ajustar la posición de la ventana emergente
-                                ventanaEmergenteCliente.css('top', ventanaTop + 'px');
-                                ventanaEmergenteCliente.css('left', ventanaLeft + 'px');
+                // Agregar evento de clic al botón de cierre
+                cerrarBoton.on('click', function() {
+                    ventanaEmergenteCliente.css('display', 'none');
+                });
 
-                                // Mostrar el botón de cierre
-                                var cerrarBoton = $('#cerrarVentanaEmergenteCliente');
-                                cerrarBoton.css('visibility', 'visible');
-
-                                // Agregar evento de clic al botón de cierre
-                                cerrarBoton.on('click', function() {
-                                    ventanaEmergenteCliente.css('display', 'none');
-                                });
-
-                                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
-                                $(document).on('click', function(event) {
-                                    if (!ventanaEmergenteCliente.is(event.target) && ventanaEmergenteCliente.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
-                                        ventanaEmergenteCliente.css('display', 'none');
-                                    }
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Error en la solicitud AJAX: ' + error);
-                                alert('Error en la solicitud AJAX al obtener los datos del cliente.');
-                            }
-                        });
+                // Agregar evento de clic al documento para cerrar la ventana emergente al hacer clic fuera de ella
+                $(document).on('click', function(event) {
+                    if (!ventanaEmergenteCliente.is(event.target) && ventanaEmergenteCliente.has(event.target).length === 0 && !$(boton).is(event.target) && $(boton).has(event.target).length === 0 && !cerrarBoton.is(event.target) && cerrarBoton.has(event.target).length === 0) {
+                        ventanaEmergenteCliente.css('display', 'none');
                     }
-                </script>
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la solicitud AJAX: ' + error);
+                alert('Error en la solicitud AJAX al obtener los datos del cliente.');
+            }
+        });
+    }
+</script>
 
 
 
