@@ -165,6 +165,7 @@ window.addEventListener('resize', adjustSidebarHeight);
             if (verificarPermisos($request)) {
                 echo '<li> <button class="item" type="button" onclick="abrirVentanaEmergente();">Test SMTP</button></li>';
             } ?>
+
             <?php
             // Define los permisos requeridos como un array
             $request = [4];
@@ -172,6 +173,15 @@ window.addEventListener('resize', adjustSidebarHeight);
             if (verificarPermisos($request)) {
                 echo '<li><a class="item" href="registro.php">Crear usuarios</a></li>';
             } ?>
+
+<?php
+            // Define los permisos requeridos como un array
+            $request = [4];
+            // Llama a la función para verificar los permisos
+            if (verificarPermisos($request)) {
+                echo '<li><a class="item" href="crear_solicitante.php">Crear solicitante</a></li>';
+            } ?>
+
 
 
 

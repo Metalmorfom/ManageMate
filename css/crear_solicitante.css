@@ -1,0 +1,189 @@
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.form_container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.input_group {
+    margin-bottom: 15px;
+}
+
+.input_group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input_group input[type="text"],
+.input_group input[type="email"],
+.input_group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.form-group.phone-inputs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.phone-inputs .input-group select,
+.phone-inputs .input-group input[type="text"] {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.input_group input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.input_group input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+#telefono-error {
+    color: red;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .form-container {
+        padding: 15px;
+    }
+
+    .form-group.phone-inputs {
+        flex-direction: column;
+    }
+
+    .phone-inputs .input-group {
+        width: 100%;
+    }
+}
+
+
+
+
+
+.phone-inputs {
+    display: flex;
+    flex-direction: column;
+    /* Organiza los hijos en una columna */
+    width: 100%;
+    margin-top: 0px;
+}
+
+
+
+
+.phone-inputs .input-group select,
+.phone-inputs .input-group input {
+    flex: 1;
+    /* Distribuye el espacio restante por igual */
+
+}
+
+/* Estilos adicionales para el select y el input para que coincidan con otros elementos del formulario */
+.phone-inputs select,
+.phone-inputs input {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    
+    /* Aplica cualquier otro estilo que desees para que coincidan con el diseño general del formulario */
+}
+
+.phone-inputs .input-group {
+    display: flex;
+    width: 100%; /* Asegura que este div también ocupe el 100% de la fila */
+    gap: 10px; /* Espacio entre el select y el input */
+}
+
+.phone-inputs .input-group select {
+    flex: 0 0 28%; /* Asigna un tamaño fijo al select de 20% */
+    /* Ajusta este porcentaje según sea necesario para obtener el tamaño deseado */
+}
+
+.phone-inputs .input-group input {
+    flex-grow: 1; /* El input se expandirá para ocupar el espacio restante */
+}
+.form-group .select2{
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+
+
+.input-invalid {
+    border: 2px solid red;
+}
+
+.input-valid {
+    border: 2px solid green;
+}
+
+
+.disabled-field {
+    background-color: #f0f0f0; /* Cambia el color de fondo */
+    color: #999; /* Cambia el color del texto */
+    cursor: not-allowed; /* Cambia el cursor */
+    pointer-events: none; /* Deshabilita eventos del mouse */
+    border: 1px solid #ccc; /* Cambia el borde */
+    opacity: 0.9; /* Cambia la opacidad */
+  }
+
+/* liisss*/
+
+
+#resultado_empresas {
+    position: absolute; /* Cambiar la posición a relativa */
+    display: none;
+    max-height: 200px; /* Altura máxima de la lista */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical cuando la lista sea más larga que la altura máxima */
+    border: 1px solid #ccc; /* Borde de la lista */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    background-color: #fff; /* Color de fondo */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra */
+}
+
+.empresa-item {
+    cursor: pointer; /* Cambia el cursor al pasar sobre los elementos de la lista */
+    margin: 5px 0; /* Espaciado entre elementos de la lista */
+}
+
+.empresa-item:hover {
+    background-color: #f0f0f0; /* Cambia el color de fondo al pasar el mouse sobre los elementos de la lista */
+}
+
+
+
+  
