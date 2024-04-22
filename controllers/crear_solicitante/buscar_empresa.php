@@ -10,7 +10,15 @@ if ($conexion->connect_error) {
 $nombreEmpresa = $_POST['nombre_empresa'];
 
 // Consulta SQL para buscar empresas que coincidan con el nombre proporcionado
-$sql = "SELECT rut_empresa, nombre FROM empresa WHERE nombre LIKE '%$nombreEmpresa%'";
+$sql = "";
+
+if (!empty($nombreEmpresa)) {
+    // Si el campo de búsqueda no está vacío, realizar la búsqueda
+    $sql = "SELECT rut_empresa, nombre FROM empresa WHERE nombre LIKE '%$nombreEmpresa%'";
+} else {
+    // Si el campo de búsqueda está vacío, obtener todas las empresas
+    $sql = "SELECT rut_empresa, nombre FROM empresa";
+}
 
 $result = $conexion->query($sql);
 

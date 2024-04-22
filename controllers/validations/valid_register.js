@@ -222,10 +222,11 @@ function bloquearCaracteresInvalidosYLimitar(event, maxLength) {
         return;
     }
 
-    // Verificar si la tecla presionada no es una letra (A-Z o a-z)
-    if (!/^[a-zA-Z]$/.test(tecla)) {
-        event.preventDefault(); // Evitar la entrada de la tecla
-    }
+
+if (!/^[a-zA-Z\s]$/.test(tecla)) {
+    event.preventDefault(); 
+}
+
 
     // Verificar si se ha alcanzado el límite de caracteres
     if (campo.value.length >= maxLength) {
